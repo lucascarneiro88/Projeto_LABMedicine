@@ -1,4 +1,5 @@
-﻿using LABMedicine.Models;
+﻿using LABMedicine.DTO;
+using LABMedicine.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,15 +17,40 @@ namespace LABMedicine.Controllers
             this.bancoDadosContext = bancoDadosContext;
         }
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult<List<MedicoGetDto>> Get()
         {
-            return Ok();
+               var listaMedicoModel = bancoDadosContext.Medico;
+               List<MedicoGetDto> listaGetDto = new List<MedicoGetDto>();
+            foreach (var item in listaMedicoModel)
+            {
+               var medicoGetDto = new MedicoGetDto();
+               medicoGetDto.Id = item.Id;
+               medicoGetDto.NomeCompleto = item.NomeCompleto;
+
+
+               listaGetDto.Add(medicoGetDto);
+            }
+                return Ok(listaGetDto);
         }
+       
+
         [HttpGet("{id}")]
-        public ActionResult Get([FromRoute] int id)
+        public ActionResult<MedicoGetDto> Get([FromRoute] int id)
         {
-            return Ok();
+            //var medicoModel = bancoDadosContext.Medico.Find(id);
+                var medicoModel = bancoDadosContext.Medico.Where(w => w.Id == id).FirstOrDefault();
+            if (medicoModel == null)
+            {
+                return NotFound("Dados não encontrados no banco de dados");
+            }
+                var medicoGetDto = new MedicoGetDto();
+                medicoGetDto.Id = medicoGetDto.Id;
+                medicoGetDto.NomeCompleto = medicoGetDto.NomeCompleto;
+
+
+            return Ok(medicoGetDto);
         }
+        
         [HttpPost]
         //public ActionResult Post([FromBody])//Nome classe DTO + classe dto
         //{
@@ -36,9 +62,24 @@ namespace LABMedicine.Controllers
         //    return Ok();
         //}
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] int id)//
+        public ActionResult Delete([FromRoute] int id)
         {
-            return Ok();
+               //Verificar se existe registro no banco de dados
+               var medicoModel = bancoDadosContext.Medico.Find(id);
+               //Verificar se o registro est� diferente de null
+            if (medicoModel != null)
+            {
+                //Deletar o regitro no banco de dados
+                bancoDadosContext.Medico.Remove(medicoModel);
+                bancoDadosContext.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                //se for null retorno um request de erro
+                return NotFound("Erro ao apagar o registro");
+            }
+                return Ok();
         }
     }
 }

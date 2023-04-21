@@ -37,7 +37,7 @@ namespace LABMedicine.Controllers
         [HttpGet("{id}")]
         public ActionResult<MedicoGetDto> Get([FromRoute] int id)
         {
-            //var medicoModel = bancoDadosContext.Medico.Find(id);
+                //var medicoModel = bancoDadosContext.Medico.Find(id);
                 var medicoModel = bancoDadosContext.Medico.Where(w => w.Id == id).FirstOrDefault();
             if (medicoModel == null)
             {
@@ -46,9 +46,13 @@ namespace LABMedicine.Controllers
                 var medicoGetDto = new MedicoGetDto();
                 medicoGetDto.Id = medicoGetDto.Id;
                 medicoGetDto.NomeCompleto = medicoGetDto.NomeCompleto;
+                medicoGetDto.InstituicaoEnsinoFormacao = medicoGetDto.InstituicaoEnsinoFormacao;
+                medicoGetDto.CadastroCrm = medicoGetDto.CadastroCrm;
+                medicoGetDto.Especializacao = medicoGetDto.Especializacao;
+                medicoGetDto.EstadoSistema = medicoGetDto.EstadoSistema;
+                medicoGetDto.TotalAtendimentosRealizados = medicoGetDto.TotalAtendimentosRealizados;
 
-
-            return Ok(medicoGetDto);
+                return Ok(medicoGetDto);
         }
         
         [HttpPost]
@@ -79,7 +83,7 @@ namespace LABMedicine.Controllers
                 //se for null retorno um request de erro
                 return NotFound("Erro ao apagar o registro");
             }
-                return Ok();
+                
         }
     }
 }

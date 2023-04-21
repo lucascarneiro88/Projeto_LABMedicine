@@ -35,6 +35,12 @@ namespace LABMedicine.Controllers
                 var pacienteGetDto = new PacienteGetDto();
                 pacienteGetDto.Id = item.Id;
                 pacienteGetDto.NomeCompleto = item.NomeCompleto;
+                pacienteGetDto.ContatoDeEmergencia = pacienteGetDto.ContatoDeEmergencia;
+                pacienteGetDto.Convenio = pacienteGetDto.Convenio;
+                pacienteGetDto.StatusAtendimento = pacienteGetDto.StatusAtendimento;
+                pacienteGetDto.TotalAtendimentos = pacienteGetDto.TotalAtendimentos;
+                pacienteGetDto.Alergias = pacienteGetDto.Alergias;
+                pacienteGetDto.CuidadosEspecificos = pacienteGetDto.CuidadosEspecificos;
 
 
                 listaGetDto.Add(pacienteGetDto);
@@ -56,6 +62,12 @@ namespace LABMedicine.Controllers
                 var pacienteGetDto = new PacienteGetDto();
                 pacienteGetDto.Id = pacienteGetDto.Id;
                 pacienteGetDto.NomeCompleto = pacienteGetDto.NomeCompleto;
+                pacienteGetDto.ContatoDeEmergencia = pacienteGetDto.ContatoDeEmergencia;
+                pacienteGetDto.Convenio = pacienteGetDto.Convenio;
+                pacienteGetDto.StatusAtendimento  = pacienteGetDto.StatusAtendimento ;
+                pacienteGetDto.TotalAtendimentos = pacienteGetDto.TotalAtendimentos;
+                pacienteGetDto.Alergias = pacienteGetDto.Alergias;
+                pacienteGetDto.CuidadosEspecificos = pacienteGetDto.CuidadosEspecificos;
 
                 return Ok(pacienteGetDto);
         }

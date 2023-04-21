@@ -61,15 +61,15 @@ namespace LABMedicine.Controllers
         //    return Ok(true);
         //}
         [HttpPut("{id}")]
-        public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody]EnfermeiroUpdateDto enfermeiroUpdateDto)
+        public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
         {
-            
-             if (id != enfermeiroUpdateDto.Id)
-             {
+
+            if (id != enfermeiroUpdateDto.Id)
+            {
                 return NotFound("Não foi possível encontrar o enfermeiro informado.");
             }
             // Verificar se não é null
-           
+
             //Buscar por id no banco de dados
             var enfermeiroModel = bancoDadosContext.Enfermeiro.Where(w => w.Id == enfermeiroUpdateDto.Id).FirstOrDefault();
             if (enfermeiroModel != null)
@@ -89,20 +89,15 @@ namespace LABMedicine.Controllers
             else
             {
                 return BadRequest("Não foi possível encontrar o enfermeiro informado.");
-                
+
             }
-           
-          
-
-
-
         }
-       
+
         [HttpDelete("{id}")]
-            public ActionResult Delete([FromRoute] int id)
-            {
-                //Verificar se existe registro no banco de dados
-                var enfermeiroModel = bancoDadosContext.Enfermeiro.Find(id);
+        public ActionResult Delete([FromRoute] int id)
+        {
+            //Verificar se existe registro no banco de dados
+            var enfermeiroModel = bancoDadosContext.Enfermeiro.Find(id);
 
             //Verificar se o registro est� diferente de null
             if (enfermeiroModel != null)
@@ -118,9 +113,10 @@ namespace LABMedicine.Controllers
             {
                 //se for null retorno um request de erro
                 return NotFound("Erro ao apagar o registro");
-            }
-            return Ok();
-            }
-    }
 
+            }
+
+        }
+
+    }
 }

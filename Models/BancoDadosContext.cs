@@ -17,7 +17,8 @@ namespace LABMedicine.Models
         public DbSet<PacienteModel> Paciente { get; set; }
         public DbSet<MedicoModel> Medico { get; set; }
         public DbSet<EnfermeiroModel> Enfermeiro { get; set; }
-       
+        public DbSet<AtendimentoModel> Atendimento { get; set; }
+
 
 
 
@@ -91,10 +92,7 @@ namespace LABMedicine.Models
                    ContatoDeEmergencia = "Gustavo 84925428",
                    Convenio = "Simed",
                    StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Sim",
-                   EmAtendimento = "Não",
-                   Atendido = "Não"
-
+                  
                },
                new PacienteModel
                {
@@ -106,10 +104,8 @@ namespace LABMedicine.Models
                    Telefone = "97563986",
                    ContatoDeEmergencia = "Juliana 91289713",
                    Convenio = "Sulmed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Sim",
-                   EmAtendimento = "Não",
-                   Atendido = "Não"
+                   StatusAtendimento = "Aguardando atendimento"
+                   
 
 
                },
@@ -123,11 +119,8 @@ namespace LABMedicine.Models
                    Telefone = "84579683",
                    ContatoDeEmergencia = "Gabriela 98765400",
                    Convenio = "Unimed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Não",
-                   EmAtendimento = "Não",
-                   Atendido = "Não"
-
+                   StatusAtendimento = "Aguardando atendimento"
+                 
                },
                new PacienteModel
                {
@@ -139,11 +132,8 @@ namespace LABMedicine.Models
                    Telefone = "84579685",
                    ContatoDeEmergencia = "Mateus 94674924",
                    Convenio = "Help",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Não",
-                   EmAtendimento = "Não",
-                   Atendido = "Não"
-
+                   StatusAtendimento = "Aguardando atendimento"
+                 
                },
                new PacienteModel
                {
@@ -155,11 +145,8 @@ namespace LABMedicine.Models
                    Telefone = "84593698",
                    ContatoDeEmergencia = "Fernanda 3214654",
                    Convenio = "Simed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Não",
-                   EmAtendimento = "Não",
-                   Atendido = "Não"
-
+                   StatusAtendimento = "Aguardando atendimento"
+                   
                },
                new PacienteModel
                {
@@ -171,10 +158,8 @@ namespace LABMedicine.Models
                    Telefone = "91689365",
                    ContatoDeEmergencia = "Maria 98515698",
                    Convenio = "Sulmed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Sim",
-                   EmAtendimento = "Não",
-                   Atendido = "Não"
+                   StatusAtendimento = "Aguardando atendimento"
+                  
 
 
                },
@@ -188,11 +173,8 @@ namespace LABMedicine.Models
                    Telefone = "91642537",
                    ContatoDeEmergencia = "Mario 97556984",
                    Convenio = "Simed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Sim",
-                   EmAtendimento = "Não",
-                   Atendido = "Sim"
-
+                   StatusAtendimento = "Aguardando atendimento"
+                 
                },
                new PacienteModel
                {
@@ -204,10 +186,8 @@ namespace LABMedicine.Models
                    Telefone = "91989693",
                    ContatoDeEmergencia = "Sergio 88658479",
                    Convenio = "unimed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Sim",
-                   EmAtendimento = "Não",
-                   Atendido = "Sim"
+                   StatusAtendimento = "Aguardando atendimento"
+               
                },
                new PacienteModel
                {
@@ -219,10 +199,8 @@ namespace LABMedicine.Models
                    Telefone = "96939291",
                    ContatoDeEmergencia = "Gertrude 84547892",
                    Convenio = "Help",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Sim",
-                   EmAtendimento = "Não",
-                   Atendido = "Sim"
+                   StatusAtendimento = "Aguardando atendimento"
+                
                },
                new PacienteModel
                {
@@ -234,10 +212,8 @@ namespace LABMedicine.Models
                    Telefone = "97989495",
                    ContatoDeEmergencia = "Cesar 84548915",
                    Convenio = "Unimed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   AguardandoAtendimento = "Sim",
-                   EmAtendimento = "Sim",
-                   Atendido = "Sim"
+                   StatusAtendimento = "Aguardando atendimento"
+                 
                }
 
            );

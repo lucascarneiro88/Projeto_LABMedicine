@@ -30,10 +30,6 @@ namespace LABMedicine.Models
 
 
 
-        //public int PacienteId { get; set; }//O sistema deve perguntar qual foi o médico e paciente que participaram do atendimento. O atendimento médico deve ter o Identificador do paciente.
-
-        //public int MedicoId { get; set; }
-
        
 
 

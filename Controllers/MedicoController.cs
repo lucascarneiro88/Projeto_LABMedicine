@@ -27,14 +27,14 @@ namespace LABMedicine.Controllers
         }
 
 
-        [HttpPut("api/medicos")]
+        [HttpPut("medicos")]
         public ActionResult<List<MedicoGetDto>> Put([FromQuery] string EstadoSistema = "Ativo")
         {
             var listaMedicoModel = bancoDadosContext.Medico.AsQueryable();
             List<MedicoGetDto> listaGetDto = new List<MedicoGetDto>();
             if (!string.IsNullOrEmpty(EstadoSistema))
             {
-                // Filtrar os pacientes pelo status de atendimento
+                // Filtrar os medicos pelo status no sistema
                 listaMedicoModel = listaMedicoModel.Where(m => m.EstadoSistema == EstadoSistema);
             }
             foreach (var item in listaMedicoModel)
@@ -60,7 +60,7 @@ namespace LABMedicine.Controllers
 
 
 
-    [HttpGet("api/medicos/{id}")]
+    [HttpGet("medicos/{id}")]
         public ActionResult<MedicoGetDto> Get([FromRoute] int id)
         {
             //var medicoModel = bancoDadosContext.Medico.Find(id);

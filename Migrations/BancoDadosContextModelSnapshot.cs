@@ -149,7 +149,7 @@ namespace LABMedicine.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MÉDICO");
+                    b.ToTable("MEDICO");
 
                     b.HasData(
                         new
@@ -224,70 +224,88 @@ namespace LABMedicine.Migrations
                     b.Property<string>("Telefone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TotalAtendimentos")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Paciente");
+                    b.ToTable("PACIENTE");
 
                     b.HasData(
                         new
                         {
                             Id = 5,
+                            Alergias = "não possui alergias",
                             CPF = "578.330.130-21",
                             ContatoDeEmergencia = "Gustavo 84925428",
                             Convenio = "Simed",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "02/01/1990",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte.Saulo da Silva",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "84759836"
+                            Telefone = "84759836",
+                            TotalAtendimentos = 2
                         },
                         new
                         {
                             Id = 6,
+                            Alergias = "Alergico a Camarão | Rinite",
                             CPF = "385.486.870-70",
                             ContatoDeEmergencia = "Juliana 91289713",
                             Convenio = "Sulmed",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "13/04/1977",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Humberto José Teixeira",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "97563986"
+                            Telefone = "97563986",
+                            TotalAtendimentos = 2
                         },
                         new
                         {
                             Id = 7,
+                            Alergias = "não possui alergias",
                             CPF = "764.712.840-04",
                             ContatoDeEmergencia = "Gabriela 98765400",
                             Convenio = "Unimed",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "26/01/1983",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Vanessa Torres ",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "84579683"
+                            Telefone = "84579683",
+                            TotalAtendimentos = 2
                         },
                         new
                         {
                             Id = 8,
+                            Alergias = "não possui alergias",
                             CPF = "167.149.340-09",
                             ContatoDeEmergencia = "Mateus 94674924",
                             Convenio = "Help",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "16/04/1973",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Marcio Guedes",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "84579685"
+                            Telefone = "84579685",
+                            TotalAtendimentos = 1
                         },
                         new
                         {
                             Id = 9,
+                            Alergias = "não possui alergias",
                             CPF = "721.149.230-96",
                             ContatoDeEmergencia = "Fernanda 3214654",
                             Convenio = "Simed",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "11/02/1998",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Maria Aparecida Souza",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "84593698"
+                            Telefone = "84593698",
+                            TotalAtendimentos = 2
                         },
                         new
                         {
@@ -299,55 +317,68 @@ namespace LABMedicine.Migrations
                             Genero = "Maculino",
                             NomeCompleto = "Pcte. Henrique Marques Soares",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "91689365"
+                            Telefone = "91689365",
+                            TotalAtendimentos = 0
                         },
                         new
                         {
                             Id = 11,
+                            Alergias = "não possui alergias",
                             CPF = "628.234.450-64",
                             ContatoDeEmergencia = "Mario 97556984",
                             Convenio = "Simed",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "01/03/2005",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Francisca Almeida dos Santos",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "91642537"
+                            Telefone = "91642537",
+                            TotalAtendimentos = 3
                         },
                         new
                         {
                             Id = 12,
+                            Alergias = "não possui alergias",
                             CPF = "628.234.450-64",
                             ContatoDeEmergencia = "Sergio 88658479",
                             Convenio = "unimed",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "15/04/2003",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. João Maria da Silva",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "91989693"
+                            Telefone = "91989693",
+                            TotalAtendimentos = 2
                         },
                         new
                         {
                             Id = 13,
+                            Alergias = "não possui alergias",
                             CPF = "781.389.900-82",
                             ContatoDeEmergencia = "Gertrude 84547892",
                             Convenio = "Help",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "04/02/1970",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Alexandre Mattos",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "96939291"
+                            Telefone = "96939291",
+                            TotalAtendimentos = 1
                         },
                         new
                         {
                             Id = 14,
+                            Alergias = "não possui alergias",
                             CPF = "677.746.870-68",
                             ContatoDeEmergencia = "Cesar 84548915",
                             Convenio = "Unimed",
+                            CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "01/04/1988",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Vitória Mengue",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "97989495"
+                            Telefone = "97989495",
+                            TotalAtendimentos = 0
                         });
                 });
 #pragma warning restore 612, 618

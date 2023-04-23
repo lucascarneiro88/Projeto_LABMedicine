@@ -12,6 +12,7 @@ namespace LABMedicine.Models
         public string descricao { get; set; }//varchar max
 
         [Required]
+    
         public int IdMedico { get; set; }//ver se precisa ser obrigatorio
 
         [Required]

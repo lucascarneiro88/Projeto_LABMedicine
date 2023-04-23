@@ -45,7 +45,7 @@ namespace LABMedicine.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MÉDICO",
+                name: "MEDICO",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -63,11 +63,11 @@ namespace LABMedicine.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MÉDICO", x => x.Id);
+                    table.PrimaryKey("PK_MEDICO", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Paciente",
+                name: "PACIENTE",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -77,6 +77,7 @@ namespace LABMedicine.Migrations
                     CuidadosEspecificos = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Convenio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatusAtendimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalAtendimentos = table.Column<int>(type: "int", nullable: false),
                     NomeCompleto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataDeNascimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -85,7 +86,7 @@ namespace LABMedicine.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Paciente", x => x.Id);
+                    table.PrimaryKey("PK_PACIENTE", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
@@ -98,7 +99,7 @@ namespace LABMedicine.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "MÉDICO",
+                table: "MEDICO",
                 columns: new[] { "Id", "CPF", "CadastroCrm", "DataDeNascimento", "Especializacao", "EstadoSistema", "Genero", "InstituicaoEnsinoFormacao", "NomeCompleto", "Telefone", "TotalAtendimentosRealizados" },
                 values: new object[,]
                 {
@@ -107,20 +108,20 @@ namespace LABMedicine.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Paciente",
-                columns: new[] { "Id", "Alergias", "CPF", "ContatoDeEmergencia", "Convenio", "CuidadosEspecificos", "DataDeNascimento", "Genero", "NomeCompleto", "StatusAtendimento", "Telefone" },
+                table: "PACIENTE",
+                columns: new[] { "Id", "Alergias", "CPF", "ContatoDeEmergencia", "Convenio", "CuidadosEspecificos", "DataDeNascimento", "Genero", "NomeCompleto", "StatusAtendimento", "Telefone", "TotalAtendimentos" },
                 values: new object[,]
                 {
-                    { 5, null, "578.330.130-21", "Gustavo 84925428", "Simed", null, "02/01/1990", "Masculino", "Pcte.Saulo da Silva", "Aguardando atendimento", "84759836" },
-                    { 6, null, "385.486.870-70", "Juliana 91289713", "Sulmed", null, "13/04/1977", "Masculino", "Pcte. Humberto José Teixeira", "Aguardando atendimento", "97563986" },
-                    { 7, null, "764.712.840-04", "Gabriela 98765400", "Unimed", null, "26/01/1983", "Feminino", "Pcte. Vanessa Torres ", "Aguardando atendimento", "84579683" },
-                    { 8, null, "167.149.340-09", "Mateus 94674924", "Help", null, "16/04/1973", "Masculino", "Pcte. Marcio Guedes", "Aguardando atendimento", "84579685" },
-                    { 9, null, "721.149.230-96", "Fernanda 3214654", "Simed", null, "11/02/1998", "Feminino", "Pcte. Maria Aparecida Souza", "Aguardando atendimento", "84593698" },
-                    { 10, null, "647.142.010-26", "Maria 98515698", "Sulmed", null, "17/02/1969", "Maculino", "Pcte. Henrique Marques Soares", "Aguardando atendimento", "91689365" },
-                    { 11, null, "628.234.450-64", "Mario 97556984", "Simed", null, "01/03/2005", "Feminino", "Pcte. Francisca Almeida dos Santos", "Aguardando atendimento", "91642537" },
-                    { 12, null, "628.234.450-64", "Sergio 88658479", "unimed", null, "15/04/2003", "Masculino", "Pcte. João Maria da Silva", "Aguardando atendimento", "91989693" },
-                    { 13, null, "781.389.900-82", "Gertrude 84547892", "Help", null, "04/02/1970", "Masculino", "Pcte. Alexandre Mattos", "Aguardando atendimento", "96939291" },
-                    { 14, null, "677.746.870-68", "Cesar 84548915", "Unimed", null, "01/04/1988", "Feminino", "Pcte. Vitória Mengue", "Aguardando atendimento", "97989495" }
+                    { 5, "não possui alergias", "578.330.130-21", "Gustavo 84925428", "Simed", "não necessita ", "02/01/1990", "Masculino", "Pcte.Saulo da Silva", "Aguardando atendimento", "84759836", 2 },
+                    { 6, "Alergico a Camarão | Rinite", "385.486.870-70", "Juliana 91289713", "Sulmed", "não necessita ", "13/04/1977", "Masculino", "Pcte. Humberto José Teixeira", "Aguardando atendimento", "97563986", 2 },
+                    { 7, "não possui alergias", "764.712.840-04", "Gabriela 98765400", "Unimed", "não necessita ", "26/01/1983", "Feminino", "Pcte. Vanessa Torres ", "Aguardando atendimento", "84579683", 2 },
+                    { 8, "não possui alergias", "167.149.340-09", "Mateus 94674924", "Help", "não necessita ", "16/04/1973", "Masculino", "Pcte. Marcio Guedes", "Aguardando atendimento", "84579685", 1 },
+                    { 9, "não possui alergias", "721.149.230-96", "Fernanda 3214654", "Simed", "não necessita ", "11/02/1998", "Feminino", "Pcte. Maria Aparecida Souza", "Aguardando atendimento", "84593698", 2 },
+                    { 10, null, "647.142.010-26", "Maria 98515698", "Sulmed", null, "17/02/1969", "Maculino", "Pcte. Henrique Marques Soares", "Aguardando atendimento", "91689365", 0 },
+                    { 11, "não possui alergias", "628.234.450-64", "Mario 97556984", "Simed", "não necessita ", "01/03/2005", "Feminino", "Pcte. Francisca Almeida dos Santos", "Aguardando atendimento", "91642537", 3 },
+                    { 12, "não possui alergias", "628.234.450-64", "Sergio 88658479", "unimed", "não necessita ", "15/04/2003", "Masculino", "Pcte. João Maria da Silva", "Aguardando atendimento", "91989693", 2 },
+                    { 13, "não possui alergias", "781.389.900-82", "Gertrude 84547892", "Help", "não necessita ", "04/02/1970", "Masculino", "Pcte. Alexandre Mattos", "Aguardando atendimento", "96939291", 1 },
+                    { 14, "não possui alergias", "677.746.870-68", "Cesar 84548915", "Unimed", "não necessita ", "01/04/1988", "Feminino", "Pcte. Vitória Mengue", "Aguardando atendimento", "97989495", 0 }
                 });
         }
 
@@ -134,10 +135,10 @@ namespace LABMedicine.Migrations
                 name: "ENFERMEIRO");
 
             migrationBuilder.DropTable(
-                name: "MÉDICO");
+                name: "MEDICO");
 
             migrationBuilder.DropTable(
-                name: "Paciente");
+                name: "PACIENTE");
         }
     }
 }

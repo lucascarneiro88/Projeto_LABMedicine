@@ -42,7 +42,7 @@ namespace LABMedicine.Controllers
 
         }
 
-        [HttpGet("api/enfermeiros/{id}")]
+        [HttpGet("enfermeiros/{id}")]
         public ActionResult<EnfermeiroGetDto> Get([FromRoute] int id)
         {
             //Buscar o registro no banco de dados por >>>ID<<<
@@ -62,7 +62,7 @@ namespace LABMedicine.Controllers
             return Ok(enfermeiroGetDto);
         }
 
-        [HttpPut("api/enfermeiros/{id}")]
+        [HttpPut("enfermeiros/{id}")]
         public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
         {
 
@@ -70,7 +70,7 @@ namespace LABMedicine.Controllers
             {
                 return NotFound("Não foi possível encontrar o enfermeiro informado.");
             }
-            // Verificar se não é null
+           
 
             //Buscar por id no banco de dados
             var enfermeiroModel = bancoDadosContext.Enfermeiro.Where(w => w.Id == enfermeiroUpdateDto.Id).FirstOrDefault();
@@ -95,7 +95,7 @@ namespace LABMedicine.Controllers
             }
         }
 
-        [HttpDelete("api/enfermeiros/{id}")]
+        [HttpDelete("enfermeiros/{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
             //Verificar se existe registro no banco de dados
@@ -118,7 +118,7 @@ namespace LABMedicine.Controllers
 
             }
         }
-      // [HttpPost("api/enfermeiros")]
+      // [HttpPost("enfermeiros")]
         //public ActionResult<EnfermeiroCreateDto> Post([FromBody] EnfermeiroCreateDto enfermeiroCreateDto)
         //{
 

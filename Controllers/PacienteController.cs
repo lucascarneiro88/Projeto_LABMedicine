@@ -25,7 +25,7 @@ namespace LABMedicine.Controllers
         {
             this.bancoDadosContext = bancoDadosContext;
         }
-        [HttpGet("/api/pacientes/status")]
+        [HttpGet("pacientes/status")]
         public ActionResult<List<PacienteGetDto>> Get([FromQuery] string StatusAtendimento = null)//Ver se realmente se não é passado null para statusAtendimento
         {
                 var listaPacienteModel = bancoDadosContext.Paciente.AsQueryable();//AsQueryable permitindo a utilização do método Where() sem gerar o erro de conversão.
@@ -79,7 +79,7 @@ namespace LABMedicine.Controllers
                 return Ok(pacienteGetDto);
         }
        
-        [HttpPost("api/paciente")]
+        [HttpPost("paciente")]
         //  public ActionResult<PacienteGetDto> Post ([FromBody] PacienteCreateDto pacienteCreateDto)
         //{
         //    return Ok();
@@ -98,7 +98,7 @@ namespace LABMedicine.Controllers
 
 
 
-        [HttpPut("api/pacientes/{id}")]
+        [HttpPut("pacientes/{id}")]
         public ActionResult<PacienteUpdateDto> Put(int id,[FromBody]PacienteUpdateDto pacienteUpdateDto)
         {
             if (id != pacienteUpdateDto.Id)

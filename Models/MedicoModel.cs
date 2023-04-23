@@ -13,7 +13,7 @@ using System.Runtime.ConstrainedExecution;
 
 namespace LABMedicine.Models
 {
-    [Table("MÉDICO")]
+    [Table("MEDICO")]
     public class MedicoModel : Pessoa
     {
 

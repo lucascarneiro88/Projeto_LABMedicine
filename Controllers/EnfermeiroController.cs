@@ -118,12 +118,21 @@ namespace LABMedicine.Controllers
 
             }
         }
-      // [HttpPost("enfermeiros")]
-        //public ActionResult<EnfermeiroCreateDto> Post([FromBody] EnfermeiroCreateDto enfermeiroCreateDto)
-        //{
+         [HttpPost("enfermeiros")]
+        public ActionResult<EnfermeiroCreateDto> Post([FromBody] EnfermeiroCreateDto enfermeiroCreateDto)
+        {
 
-        //    return Ok();
-        //}
+            foreach (var enfermeiroModel in bancoDadosContext.Enfermeiro)
+            { if enfermeiroModel.CPF == enfermeiroCreateDto.CPF)
+                {
+                    return Conflict("CPF já  cadastrado");
+                }
+
+                EnfermeiroModel enfermeiroCreateDto = new();
+
+            }
+            return Ok();
+        }
     }
 }
 

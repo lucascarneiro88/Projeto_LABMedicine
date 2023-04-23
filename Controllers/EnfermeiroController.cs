@@ -2,9 +2,9 @@
 using LABMedicine.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CPFValidation;
+using BusinessDomainValidationObjects;
 using Microsoft.EntityFrameworkCore;
-
+using LABMedicine.validation;
 
 namespace LABMedicine.Controllers
 {
@@ -61,8 +61,49 @@ namespace LABMedicine.Controllers
 
             return Ok(enfermeiroGetDto);
         }
+     
 
-        [HttpPut("enfermeiros/{id}")]
+[HttpPost("enfermeiros")]
+    public ActionResult<EnfermeiroCreateDto> Post([FromBody] EnfermeiroCreateDto enfermeiroCreateDto)
+    {
+        // Verifica se o CPF já está cadastrado
+        if (bancoDadosContext.Enfermeiro.Any(e => e.CPF == enfermeiroCreateDto.CPF))
+        {
+            return Conflict("CPF já cadastrado");
+        }
+
+        
+        if (!new CPF().IsValid(enfermeiroCreateDto.CPF))
+        {
+            return BadRequest("CPF inválido");
+        }
+
+        EnfermeiroModel enfermeiroModel = new EnfermeiroModel
+        {
+            NomeCompleto = enfermeiroCreateDto.NomeCompleto,
+            CPF = enfermeiroCreateDto.CPF,
+            InstituicaoEnsinoFormacao = enfermeiroCreateDto.InstituicaoEnsinoFormacao,
+            CadastroCOFEN = enfermeiroCreateDto.CadastroCOFEN
+        };
+
+       
+        bancoDadosContext.Enfermeiro.Add(enfermeiroModel);
+        bancoDadosContext.SaveChanges();
+
+        // Retorna o objeto criado como um EnfermeiroCreateDto
+        var resultado = new EnfermeiroCreateDto
+        {
+            NomeCompleto = enfermeiroModel.NomeCompleto,
+            CPF = enfermeiroModel.CPF,
+            InstituicaoEnsinoFormacao = enfermeiroModel.InstituicaoEnsinoFormacao,
+            CadastroCOFEN = enfermeiroModel.CadastroCOFEN
+        };
+        return Ok(enfermeiroCreateDto);
+    }
+
+
+
+    [HttpPut("enfermeiros/{id}")]
         public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
         {
 
@@ -118,24 +159,12 @@ namespace LABMedicine.Controllers
 
             }
         }
-         [HttpPost("enfermeiros")]
-        public ActionResult<EnfermeiroCreateDto> Post([FromBody] EnfermeiroCreateDto enfermeiroCreateDto)
-        {
+      
 
-            foreach (var enfermeiroModel in bancoDadosContext.Enfermeiro)
-            { if enfermeiroModel.CPF == enfermeiroCreateDto.CPF)
-                {
-                    return Conflict("CPF já  cadastrado");
-                }
-
-                EnfermeiroModel enfermeiroCreateDto = new();
-
-            }
-            return Ok();
-        }
     }
 }
 
 
 
- 
+
+

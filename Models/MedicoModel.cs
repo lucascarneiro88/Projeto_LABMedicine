@@ -1,6 +1,15 @@
 ﻿using LABMedicine.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using LABMedicine.Enumerator;
+
+using System.Drawing;
+using System.Runtime.ConstrainedExecution;
+
+
+
+
+
 
 namespace LABMedicine.Models
 {
@@ -23,8 +32,8 @@ namespace LABMedicine.Models
                                                   //Clínico Geral,Anestesista,Dermatologia,Ginecologia,Neurologia
                                                   //Pediatria,Psiquiatria,Ortopedia
                                                  
-        public bool EstadoSistema { get; set; }   //Estado no Sistema:Ativo,Inativo
-        public string TotalAtendimentosRealizados { get; set; } //Total de atendimentos realizados
+        public string? EstadoSistema { get; set; }   //Estado no Sistema:Ativo,Inativo
+        public string? TotalAtendimentosRealizados { get; set; } //Total de atendimentos realizados
                                                                 //Este item é um contador que inicia em zero. Sempre que um médico realiza um atendimento este valor deve ser incrementado
 
 

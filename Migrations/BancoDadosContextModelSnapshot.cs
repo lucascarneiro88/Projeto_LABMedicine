@@ -21,6 +21,22 @@ namespace LABMedicine.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("LABMedicine.Models.AtendimentoModel", b =>
+                {
+                    b.Property<string>("descricao")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("IdMedico")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdPaciente")
+                        .HasColumnType("int");
+
+                    b.HasKey("descricao");
+
+                    b.ToTable("ATENDIMENTO");
+                });
+
             modelBuilder.Entity("LABMedicine.Models.EnfermeiroModel", b =>
                 {
                     b.Property<int>("Id")
@@ -109,8 +125,8 @@ namespace LABMedicine.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("EstadoSistema")
-                        .HasColumnType("bit");
+                    b.Property<string>("EstadoSistema")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Genero")
                         .HasColumnType("nvarchar(max)");
@@ -129,7 +145,6 @@ namespace LABMedicine.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TotalAtendimentosRealizados")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -144,7 +159,6 @@ namespace LABMedicine.Migrations
                             CadastroCrm = "55666/SC",
                             DataDeNascimento = "02/02/1986",
                             Especializacao = "Clinico Geral",
-                            EstadoSistema = false,
                             Genero = "Masculino",
                             InstituicaoEnsinoFormacao = "UFSC",
                             NomeCompleto = "Dr. Roberto Castro Medeiros",
@@ -158,7 +172,6 @@ namespace LABMedicine.Migrations
                             CadastroCrm = "99666/RS",
                             DataDeNascimento = "01/05/1979",
                             Especializacao = "Ortopedista",
-                            EstadoSistema = false,
                             Genero = "Feminino",
                             InstituicaoEnsinoFormacao = "UFSM",
                             NomeCompleto = "Dra. Alessandra Souza dos Santos",
@@ -175,13 +188,7 @@ namespace LABMedicine.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AguardandoAtendimento")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Alergias")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Atendido")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CPF")
@@ -202,13 +209,7 @@ namespace LABMedicine.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmAtendimento")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Genero")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NaoAtendidio")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomeCompleto")
@@ -223,9 +224,6 @@ namespace LABMedicine.Migrations
                     b.Property<string>("Telefone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalAtendimentos")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Paciente");
@@ -234,162 +232,122 @@ namespace LABMedicine.Migrations
                         new
                         {
                             Id = 5,
-                            AguardandoAtendimento = "Sim",
-                            Atendido = "Não",
                             CPF = "578.330.130-21",
                             ContatoDeEmergencia = "Gustavo 84925428",
                             Convenio = "Simed",
                             DataDeNascimento = "02/01/1990",
-                            EmAtendimento = "Não",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte.Saulo da Silva",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "84759836",
-                            TotalAtendimentos = 0
+                            Telefone = "84759836"
                         },
                         new
                         {
                             Id = 6,
-                            AguardandoAtendimento = "Sim",
-                            Atendido = "Não",
                             CPF = "385.486.870-70",
                             ContatoDeEmergencia = "Juliana 91289713",
                             Convenio = "Sulmed",
                             DataDeNascimento = "13/04/1977",
-                            EmAtendimento = "Não",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Humberto José Teixeira",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "97563986",
-                            TotalAtendimentos = 0
+                            Telefone = "97563986"
                         },
                         new
                         {
                             Id = 7,
-                            AguardandoAtendimento = "Não",
-                            Atendido = "Não",
                             CPF = "764.712.840-04",
                             ContatoDeEmergencia = "Gabriela 98765400",
                             Convenio = "Unimed",
                             DataDeNascimento = "26/01/1983",
-                            EmAtendimento = "Não",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Vanessa Torres ",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "84579683",
-                            TotalAtendimentos = 0
+                            Telefone = "84579683"
                         },
                         new
                         {
                             Id = 8,
-                            AguardandoAtendimento = "Não",
-                            Atendido = "Não",
                             CPF = "167.149.340-09",
                             ContatoDeEmergencia = "Mateus 94674924",
                             Convenio = "Help",
                             DataDeNascimento = "16/04/1973",
-                            EmAtendimento = "Não",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Marcio Guedes",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "84579685",
-                            TotalAtendimentos = 0
+                            Telefone = "84579685"
                         },
                         new
                         {
                             Id = 9,
-                            AguardandoAtendimento = "Não",
-                            Atendido = "Não",
                             CPF = "721.149.230-96",
                             ContatoDeEmergencia = "Fernanda 3214654",
                             Convenio = "Simed",
                             DataDeNascimento = "11/02/1998",
-                            EmAtendimento = "Não",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Maria Aparecida Souza",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "84593698",
-                            TotalAtendimentos = 0
+                            Telefone = "84593698"
                         },
                         new
                         {
                             Id = 10,
-                            AguardandoAtendimento = "Sim",
-                            Atendido = "Não",
                             CPF = "647.142.010-26",
                             ContatoDeEmergencia = "Maria 98515698",
                             Convenio = "Sulmed",
                             DataDeNascimento = "17/02/1969",
-                            EmAtendimento = "Não",
                             Genero = "Maculino",
                             NomeCompleto = "Pcte. Henrique Marques Soares",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "91689365",
-                            TotalAtendimentos = 0
+                            Telefone = "91689365"
                         },
                         new
                         {
                             Id = 11,
-                            AguardandoAtendimento = "Sim",
-                            Atendido = "Sim",
                             CPF = "628.234.450-64",
                             ContatoDeEmergencia = "Mario 97556984",
                             Convenio = "Simed",
                             DataDeNascimento = "01/03/2005",
-                            EmAtendimento = "Não",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Francisca Almeida dos Santos",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "91642537",
-                            TotalAtendimentos = 0
+                            Telefone = "91642537"
                         },
                         new
                         {
                             Id = 12,
-                            AguardandoAtendimento = "Sim",
-                            Atendido = "Sim",
                             CPF = "628.234.450-64",
                             ContatoDeEmergencia = "Sergio 88658479",
                             Convenio = "unimed",
                             DataDeNascimento = "15/04/2003",
-                            EmAtendimento = "Não",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. João Maria da Silva",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "91989693",
-                            TotalAtendimentos = 0
+                            Telefone = "91989693"
                         },
                         new
                         {
                             Id = 13,
-                            AguardandoAtendimento = "Sim",
-                            Atendido = "Sim",
                             CPF = "781.389.900-82",
                             ContatoDeEmergencia = "Gertrude 84547892",
                             Convenio = "Help",
                             DataDeNascimento = "04/02/1970",
-                            EmAtendimento = "Não",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Alexandre Mattos",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "96939291",
-                            TotalAtendimentos = 0
+                            Telefone = "96939291"
                         },
                         new
                         {
                             Id = 14,
-                            AguardandoAtendimento = "Sim",
-                            Atendido = "Sim",
                             CPF = "677.746.870-68",
                             ContatoDeEmergencia = "Cesar 84548915",
                             Convenio = "Unimed",
                             DataDeNascimento = "01/04/1988",
-                            EmAtendimento = "Sim",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Vitória Mengue",
                             StatusAtendimento = "Aguardando atendimento",
-                            Telefone = "97989495",
-                            TotalAtendimentos = 0
+                            Telefone = "97989495"
                         });
                 });
 #pragma warning restore 612, 618

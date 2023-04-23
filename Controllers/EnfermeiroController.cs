@@ -2,6 +2,9 @@
 using LABMedicine.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using CPFValidation;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace LABMedicine.Controllers
 {
@@ -15,7 +18,9 @@ namespace LABMedicine.Controllers
         public EnfermeiroController(BancoDadosContext bancoDadosContext)
         {
             this.bancoDadosContext = bancoDadosContext;
+
         }
+
         [HttpGet]
         public ActionResult<List<EnfermeiroGetDto>> Get()
         {
@@ -30,13 +35,14 @@ namespace LABMedicine.Controllers
                 enfermeiroGetDto.NomeCompleto = item.NomeCompleto;
 
 
-                listaGetDto.Add(enfermeiroGetDto);
+                //listaGetDto.Add(enfermeiroGetDto);
             }
 
             return Ok(listaGetDto);
 
         }
-        [HttpGet("{id}")]
+
+        [HttpGet("api/enfermeiros/{id}")]
         public ActionResult<EnfermeiroGetDto> Get([FromRoute] int id)
         {
             //Buscar o registro no banco de dados por >>>ID<<<
@@ -55,12 +61,8 @@ namespace LABMedicine.Controllers
 
             return Ok(enfermeiroGetDto);
         }
-        [HttpPost]
-        //public ActionResult Post([FromBody])//Nome classe DTO + classe dto
-        //{
-        //    return Ok(true);
-        //}
-        [HttpPut("{id}")]
+
+        [HttpPut("api/enfermeiros/{id}")]
         public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
         {
 
@@ -93,7 +95,7 @@ namespace LABMedicine.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("api/enfermeiros/{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
             //Verificar se existe registro no banco de dados
@@ -115,8 +117,16 @@ namespace LABMedicine.Controllers
                 return NotFound("Erro ao apagar o registro");
 
             }
-
         }
+      // [HttpPost("api/enfermeiros")]
+        //public ActionResult<EnfermeiroCreateDto> Post([FromBody] EnfermeiroCreateDto enfermeiroCreateDto)
+        //{
 
+        //    return Ok();
+        //}
     }
 }
+
+
+
+ 

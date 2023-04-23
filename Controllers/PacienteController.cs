@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LABMedicine.DTO;
+using LABMedicine.Enumerator;
 using LABMedicine.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,8 +25,8 @@ namespace LABMedicine.Controllers
         {
             this.bancoDadosContext = bancoDadosContext;
         }
-        [HttpGet("/api/pacientes")]
-        public ActionResult<List<PacienteGetDto>> Get([FromQuery] string StatusAtendimento = "Atendido")//Ver se realmente se não é passado null para statusAtendimento
+        [HttpGet("/api/pacientes/status")]
+        public ActionResult<List<PacienteGetDto>> Get([FromQuery] string StatusAtendimento = null)//Ver se realmente se não é passado null para statusAtendimento
         {
                 var listaPacienteModel = bancoDadosContext.Paciente.AsQueryable();//AsQueryable permitindo a utilização do método Where() sem gerar o erro de conversão.
                 //var listaPacienteModel = bancoDadosContext.Paciente;
@@ -40,11 +41,11 @@ namespace LABMedicine.Controllers
             foreach (var item in listaPacienteModel)
             {
                 var pacienteGetDto = new PacienteGetDto();
-                pacienteGetDto.Id = item.Id;
-                pacienteGetDto.NomeCompleto = item.NomeCompleto;
+                pacienteGetDto.Id = pacienteGetDto.Id;
+                pacienteGetDto.NomeCompleto = pacienteGetDto.NomeCompleto;
                 pacienteGetDto.ContatoDeEmergencia = pacienteGetDto.ContatoDeEmergencia;
                 pacienteGetDto.Convenio = pacienteGetDto.Convenio;
-                pacienteGetDto.StatusAtendimento = pacienteGetDto.StatusAtendimento;
+                pacienteGetDto.StatusAtendimentoEnum = pacienteGetDto.StatusAtendimentoEnum;
                 pacienteGetDto.Alergias = pacienteGetDto.Alergias;
                 pacienteGetDto.CuidadosEspecificos = pacienteGetDto.CuidadosEspecificos;
 
@@ -70,43 +71,34 @@ namespace LABMedicine.Controllers
                 pacienteGetDto.NomeCompleto = pacienteGetDto.NomeCompleto;
                 pacienteGetDto.ContatoDeEmergencia = pacienteGetDto.ContatoDeEmergencia;
                 pacienteGetDto.Convenio = pacienteGetDto.Convenio;
-                pacienteGetDto.StatusAtendimento  = pacienteGetDto.StatusAtendimento ;
+                pacienteGetDto.StatusAtendimentoEnum  = pacienteGetDto.StatusAtendimentoEnum ;
                 pacienteGetDto.Alergias = pacienteGetDto.Alergias;
                 pacienteGetDto.CuidadosEspecificos = pacienteGetDto.CuidadosEspecificos;
+          
 
                 return Ok(pacienteGetDto);
         }
        
-        [HttpPost("api")]
-        //public ActionResult<> Post([FromBody] )//Nome classe DTO + classe dto
+        [HttpPost("api/paciente")]
+        //  public ActionResult<PacienteGetDto> Post ([FromBody] PacienteCreateDto pacienteCreateDto)
         //{
-
-            // Lógica para cadastrar o novo paciente
-
-         //  return Ok();
-       // }
+        //    return Ok();
+        //}
 
 
-        [HttpPut()]//"api/pacientes/{id}/status"
 
-        //public ActionResult<> Put([FromBody] )
+        //    [HttpPut("api/pacientes/Status? = ATENDIDO")]
+        //  public ActionResult<PacienteGetDto> Put ([FromBody] PacienteGetDto pacienteGetDto)
         //{
-        //        No corpo da request, informar objeto json com o campo status, e seu novo valor; EX: { “Status”:”Atendido”}
-        //    O campo deve ser validado como sendo obrigatório e pertencente aos valores possíveis para este campo.
-        //    Response:
-        //    HTTP Status Code 200 (OK) em caso de sucesso, constando no corpo da resposta os dados atualizados do paciente.
-        //    HTTP Status Code 400 (Bad Request) em caso de requisição com dados inválidos, informando mensagem de erro explicativa no corpo do response.
-        //    HTTP Status Code 404 (Not Found) em caso de não ser encontrado registro com o código informado, retornando mensagem de erro explicativa no corpo do response.
-        //    ‌
-
-
         //    return Ok();
         //}
 
 
 
 
-        [HttpPut("{id}")]
+
+
+        [HttpPut("api/pacientes/{id}")]
         public ActionResult<PacienteUpdateDto> Put(int id,[FromBody]PacienteUpdateDto pacienteUpdateDto)
         {
             if (id != pacienteUpdateDto.Id)

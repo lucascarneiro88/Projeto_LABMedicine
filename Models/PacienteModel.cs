@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using LABMedicine.Base;
 using System.Drawing;
 using System.Runtime.ConstrainedExecution;
+using LABMedicine.Enumerator;
 
 namespace LABMedicine.Models
 {

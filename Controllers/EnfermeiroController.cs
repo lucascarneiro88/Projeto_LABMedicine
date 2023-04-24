@@ -117,48 +117,73 @@ namespace LABMedicine.Controllers
 
 
 
-    
 
 
 
 
-    [HttpPut("enfermeiros/{id}")]
+
+        //[HttpPut("enfermeiros/{id}")]
+        //    public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
+        //    {
+
+        //        if (id != enfermeiroUpdateDto.Id)
+        //        {
+        //            return NotFound("Não foi possível encontrar o enfermeiro informado.");
+        //        }
+
+
+        //        //Buscar por id no banco de dados
+        //        var enfermeiroModel = bancoDadosContext.Enfermeiro.Where(w => w.Id == enfermeiroUpdateDto.Id).FirstOrDefault();
+        //        if (enfermeiroModel != null)
+        //        {
+        //            enfermeiroModel.Id = enfermeiroUpdateDto.Id;
+        //            enfermeiroModel.NomeCompleto = enfermeiroUpdateDto.NomeCompleto;
+        //            enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroUpdateDto.InstituicaoEnsinoFormacao;
+        //            enfermeiroModel.CadastroCOFEN = enfermeiroUpdateDto.CadastroCOFEN;
+        //            enfermeiroModel.Genero = enfermeiroUpdateDto.Genero;
+        //            enfermeiroModel.DataDeNascimento = enfermeiroUpdateDto.DataDeNascimento;
+        //            enfermeiroModel.Telefone = enfermeiroUpdateDto.Telefone;
+        //            enfermeiroModel.CPF = enfermeiroUpdateDto.CPF;
+
+
+        //            bancoDadosContext.Attach(enfermeiroModel);
+        //            bancoDadosContext.Enfermeiro.Update(enfermeiroModel);
+        //            bancoDadosContext.Enfermeiro.Attach(enfermeiroModel);
+
+        //            bancoDadosContext.SaveChanges();
+        //            return Ok(enfermeiroUpdateDto);
+        //        }
+        //        else
+        //        {
+        //            return BadRequest("Não foi possível encontrar o enfermeiro informado.");
+
+        //        }
+        //    }
+
+        [HttpPut("enfermeiros/{id}")]
         public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
         {
-
-            if (id != enfermeiroUpdateDto.Id)
+            // Buscar por id no banco de dados
+            var enfermeiroModel = bancoDadosContext.Enfermeiro.SingleOrDefault(e => e.Id == id);
+            if (enfermeiroModel == null)
             {
                 return NotFound("Não foi possível encontrar o enfermeiro informado.");
             }
-           
 
-            //Buscar por id no banco de dados
-            var enfermeiroModel = bancoDadosContext.Enfermeiro.Where(w => w.Id == enfermeiroUpdateDto.Id).FirstOrDefault();
-            if (enfermeiroModel != null)
-            {
-                enfermeiroModel.Id = enfermeiroUpdateDto.Id;
-                enfermeiroModel.NomeCompleto = enfermeiroUpdateDto.NomeCompleto;
-                enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroUpdateDto.InstituicaoEnsinoFormacao;
-                enfermeiroModel.CadastroCOFEN = enfermeiroUpdateDto.CadastroCOFEN;
-                enfermeiroModel.Genero = enfermeiroUpdateDto.Genero;
-                enfermeiroModel.DataDeNascimento = enfermeiroUpdateDto.DataDeNascimento;
-                enfermeiroModel.Telefone = enfermeiroUpdateDto.Telefone;
-                enfermeiroModel.CPF = enfermeiroUpdateDto.CPF;
-               
+            // Atualizar informações do enfermeiro
+            enfermeiroModel.NomeCompleto = enfermeiroUpdateDto.NomeCompleto;
+            enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroUpdateDto.InstituicaoEnsinoFormacao;
+            enfermeiroModel.CadastroCOFEN = enfermeiroUpdateDto.CadastroCOFEN;
+            enfermeiroModel.Genero = enfermeiroUpdateDto.Genero;
+            enfermeiroModel.DataDeNascimento = enfermeiroUpdateDto.DataDeNascimento;
+            enfermeiroModel.Telefone = enfermeiroUpdateDto.Telefone;
+            enfermeiroModel.CPF = enfermeiroUpdateDto.CPF;
 
-               // bancoDadosContext.Attach(enfermeiroModel);
-                bancoDadosContext.Enfermeiro.Update(enfermeiroModel);
-                bancoDadosContext.Enfermeiro.Attach(enfermeiroModel);
+            bancoDadosContext.SaveChanges();
 
-                bancoDadosContext.SaveChanges();
-                return Ok(enfermeiroUpdateDto);
-            }
-            else
-            {
-                return BadRequest("Não foi possível encontrar o enfermeiro informado.");
-
-            }
+            return Ok(enfermeiroUpdateDto);
         }
+
 
         [HttpDelete("enfermeiros/{id}")]
         public ActionResult Delete([FromRoute] int id)

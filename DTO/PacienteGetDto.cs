@@ -8,7 +8,7 @@ namespace LABMedicine.DTO
         public string NomeCompleto { get; set; }
         public string ContatoDeEmergencia { get; set; }
         public string? Convenio { get; set; } 
-        public StatusAtendimentoEnum StatusAtendimentoEnum { get; set; }//Status de Atendimento: Um paciente pode estar com as seguintes situações:
+        public string StatusAtendimento { get; set; }//Status de Atendimento: Um paciente pode estar com as seguintes situações:
         public string? Alergias { get; set; }//Lista de Alergias
         public string? CuidadosEspecificos { get; set; }//Lista de Cuidados Específicos
 

@@ -32,7 +32,7 @@ namespace LABMedicine.Models
                                                   //Clínico Geral,Anestesista,Dermatologia,Ginecologia,Neurologia
                                                   //Pediatria,Psiquiatria,Ortopedia
                                                  
-        public string? EstadoSistema { get; set; }   //Estado no Sistema:Ativo,Inativo
+        public EstadoSistemaEnum EstadoSistemaEnum { get; set; }   //Estado no Sistema:Ativo,Inativo
         public string? TotalAtendimentosRealizados { get; set; } //Total de atendimentos realizados
                                                                 //Este item é um contador que inicia em zero. Sempre que um médico realiza um atendimento este valor deve ser incrementado
 

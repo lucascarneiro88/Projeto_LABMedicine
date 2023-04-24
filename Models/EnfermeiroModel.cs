@@ -6,7 +6,7 @@ namespace LABMedicine.Models
 {
     [Table("ENFERMEIRO")]
     public class EnfermeiroModel : Pessoa
-    {
+    {    
         [Required]
         [MaxLength(100)]
 

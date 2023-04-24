@@ -53,7 +53,7 @@ namespace LABMedicine.Migrations
                     InstituicaoEnsinoFormacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CadastroCrm = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Especializacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    EstadoSistema = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EstadoSistemaEnum = table.Column<int>(type: "int", nullable: false),
                     TotalAtendimentosRealizados = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NomeCompleto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -100,11 +100,11 @@ namespace LABMedicine.Migrations
 
             migrationBuilder.InsertData(
                 table: "MEDICO",
-                columns: new[] { "Id", "CPF", "CadastroCrm", "DataDeNascimento", "Especializacao", "EstadoSistema", "Genero", "InstituicaoEnsinoFormacao", "NomeCompleto", "Telefone", "TotalAtendimentosRealizados" },
+                columns: new[] { "Id", "CPF", "CadastroCrm", "DataDeNascimento", "Especializacao", "EstadoSistemaEnum", "Genero", "InstituicaoEnsinoFormacao", "NomeCompleto", "Telefone", "TotalAtendimentosRealizados" },
                 values: new object[,]
                 {
-                    { 1, "995.693.440-24", "55666/SC", "02/02/1986", "Clinico Geral", null, "Masculino", "UFSC", "Dr. Roberto Castro Medeiros", "84912333", "0" },
-                    { 2, "864.204.910-37", "99666/RS", "01/05/1979", "Ortopedista", null, "Feminino", "UFSM", "Dra. Alessandra Souza dos Santos", "98653256", "0" }
+                    { 1, "995.693.440-24", "55666/SC", "02/02/1986", "Clinico Geral", 0, "Masculino", "UFSC", "Dr. Roberto Castro Medeiros", "84912333", "0" },
+                    { 2, "864.204.910-37", "99666/RS", "01/05/1979", "Ortopedista", 0, "Feminino", "UFSM", "Dra. Alessandra Souza dos Santos", "98653256", "0" }
                 });
 
             migrationBuilder.InsertData(
@@ -117,7 +117,7 @@ namespace LABMedicine.Migrations
                     { 7, "não possui alergias", "764.712.840-04", "Gabriela 98765400", "Unimed", "não necessita ", "26/01/1983", "Feminino", "Pcte. Vanessa Torres ", "Aguardando atendimento", "84579683", 2 },
                     { 8, "não possui alergias", "167.149.340-09", "Mateus 94674924", "Help", "não necessita ", "16/04/1973", "Masculino", "Pcte. Marcio Guedes", "Aguardando atendimento", "84579685", 1 },
                     { 9, "não possui alergias", "721.149.230-96", "Fernanda 3214654", "Simed", "não necessita ", "11/02/1998", "Feminino", "Pcte. Maria Aparecida Souza", "Aguardando atendimento", "84593698", 2 },
-                    { 10, null, "647.142.010-26", "Maria 98515698", "Sulmed", null, "17/02/1969", "Maculino", "Pcte. Henrique Marques Soares", "Aguardando atendimento", "91689365", 0 },
+                    { 10, null, "647.142.010-26", "Maria 98515698", "Sulmed", null, "17/02/1969", "Maculino", "Pcte. Henrique Marques Soares", "Atendido", "91689365", 0 },
                     { 11, "não possui alergias", "628.234.450-64", "Mario 97556984", "Simed", "não necessita ", "01/03/2005", "Feminino", "Pcte. Francisca Almeida dos Santos", "Aguardando atendimento", "91642537", 3 },
                     { 12, "não possui alergias", "628.234.450-64", "Sergio 88658479", "unimed", "não necessita ", "15/04/2003", "Masculino", "Pcte. João Maria da Silva", "Aguardando atendimento", "91989693", 2 },
                     { 13, "não possui alergias", "781.389.900-82", "Gertrude 84547892", "Help", "não necessita ", "04/02/1970", "Masculino", "Pcte. Alexandre Mattos", "Aguardando atendimento", "96939291", 1 },

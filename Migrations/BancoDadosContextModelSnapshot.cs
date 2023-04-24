@@ -125,8 +125,8 @@ namespace LABMedicine.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("EstadoSistema")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EstadoSistemaEnum")
+                        .HasColumnType("int");
 
                     b.Property<string>("Genero")
                         .HasColumnType("nvarchar(max)");
@@ -159,6 +159,7 @@ namespace LABMedicine.Migrations
                             CadastroCrm = "55666/SC",
                             DataDeNascimento = "02/02/1986",
                             Especializacao = "Clinico Geral",
+                            EstadoSistemaEnum = 0,
                             Genero = "Masculino",
                             InstituicaoEnsinoFormacao = "UFSC",
                             NomeCompleto = "Dr. Roberto Castro Medeiros",
@@ -172,6 +173,7 @@ namespace LABMedicine.Migrations
                             CadastroCrm = "99666/RS",
                             DataDeNascimento = "01/05/1979",
                             Especializacao = "Ortopedista",
+                            EstadoSistemaEnum = 0,
                             Genero = "Feminino",
                             InstituicaoEnsinoFormacao = "UFSM",
                             NomeCompleto = "Dra. Alessandra Souza dos Santos",
@@ -316,7 +318,7 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "17/02/1969",
                             Genero = "Maculino",
                             NomeCompleto = "Pcte. Henrique Marques Soares",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = "Atendido",
                             Telefone = "91689365",
                             TotalAtendimentos = 0
                         },

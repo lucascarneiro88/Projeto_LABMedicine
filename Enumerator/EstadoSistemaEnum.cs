@@ -1,13 +1,20 @@
-﻿using System.Text.Json.Serialization;
+﻿
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LABMedicine.Enumerator
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public class EstadoSistemaEnum
+    public enum EstadoSistemaEnum
     {
-        public int Ativo = 0;
-        public int Inativo = 1;
-       
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        Ativo = 0,
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        Inativo = 1
     }
 }

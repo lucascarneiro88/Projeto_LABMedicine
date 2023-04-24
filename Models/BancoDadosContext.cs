@@ -173,7 +173,7 @@ namespace LABMedicine.Models
                    Telefone = "91689365",
                    ContatoDeEmergencia = "Maria 98515698",
                    Convenio = "Sulmed",
-                   StatusAtendimento = "Aguardando atendimento",
+                   StatusAtendimento = "Atendido",
                    TotalAtendimentos = 0
 
 

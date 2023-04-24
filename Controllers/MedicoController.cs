@@ -26,41 +26,42 @@ namespace LABMedicine.Controllers
             this.bancoDadosContext = bancoDadosContext;
         }
 
+       
 
-        [HttpPut("medicos")]
-        public ActionResult<List<MedicoGetDto>> Put([FromQuery] string EstadoSistema = "Ativo")
-        {
-            var listaMedicoModel = bancoDadosContext.Medico.AsQueryable();
-            List<MedicoGetDto> listaGetDto = new List<MedicoGetDto>();
-            if (!string.IsNullOrEmpty(EstadoSistema))
-            {
-                // Filtrar os medicos pelo status no sistema
-                listaMedicoModel = listaMedicoModel.Where(m => m.EstadoSistema == EstadoSistema);
-            }
-            foreach (var item in listaMedicoModel)
-            {
-                var medicoGetDto = new MedicoGetDto();
-                medicoGetDto.Id = medicoGetDto.Id;
-                medicoGetDto.NomeCompleto = medicoGetDto.NomeCompleto;
-                medicoGetDto.InstituicaoEnsinoFormacao = medicoGetDto.InstituicaoEnsinoFormacao;
-                medicoGetDto.CadastroCrm = medicoGetDto.CadastroCrm;
-                medicoGetDto.Especializacao = medicoGetDto.Especializacao;
-                medicoGetDto.EstadoSistemaEnum = medicoGetDto.EstadoSistemaEnum;
-                medicoGetDto.TotalAtendimentosRealizados = medicoGetDto.TotalAtendimentosRealizados;
-
-
-                listaGetDto.Add(medicoGetDto);
-            }
+            //[HttpPut("medicos")]
+            //public ActionResult<List<MedicoGetDto>> Put([FromQuery] string EstadoSistema = "Ativo")
+            //{
+            //    var listaMedicoModel = bancoDadosContext.Medico.AsQueryable();
+            //    List<MedicoGetDto> listaGetDto = new List<MedicoGetDto>();
+            //    if (!string.IsNullOrEmpty(EstadoSistema))
+            //    {
+            //        // Filtrar os medicos pelo status no sistema
+            //        listaMedicoModel = listaMedicoModel.Where(m => m.EstadoSistemaEnum == EstadoSistema);
+            //    }
+            //    foreach (var item in listaMedicoModel)
+            //    {
+            //        var medicoGetDto = new MedicoGetDto();
+            //        medicoGetDto.Id = item.Id;
+            //        medicoGetDto.NomeCompleto = item.NomeCompleto;
+            //        medicoGetDto.InstituicaoEnsinoFormacao = item.InstituicaoEnsinoFormacao;
+            //        medicoGetDto.CadastroCrm = item.CadastroCrm;
+            //        medicoGetDto.Especializacao = item.Especializacao;
+            //        medicoGetDto.EstadoSistemaEnum = item.EstadoSistemaEnum;
+            //        medicoGetDto.TotalAtendimentosRealizados = item.TotalAtendimentosRealizados;
 
 
-
-
-            return Ok(listaGetDto);
-        }
+            //        listaGetDto.Add(medicoGetDto);
+            //    }
 
 
 
-    [HttpGet("medicos/{id}")]
+
+            //    return Ok(listaGetDto);
+            //}
+
+
+
+            [HttpGet("medicos/{id}")]
         public ActionResult<MedicoGetDto> Get([FromRoute] int id)
         {
             //var medicoModel = bancoDadosContext.Medico.Find(id);
@@ -70,13 +71,13 @@ namespace LABMedicine.Controllers
                 return NotFound("Dados não encontrados no banco de dados");
             }
             var medicoGetDto = new MedicoGetDto();
-            medicoGetDto.Id = medicoGetDto.Id;
-            medicoGetDto.NomeCompleto = medicoGetDto.NomeCompleto;
-            medicoGetDto.InstituicaoEnsinoFormacao = medicoGetDto.InstituicaoEnsinoFormacao;
-            medicoGetDto.CadastroCrm = medicoGetDto.CadastroCrm;
-            medicoGetDto.Especializacao = medicoGetDto.Especializacao;
-            medicoGetDto.EstadoSistemaEnum = medicoGetDto.EstadoSistemaEnum;
-            medicoGetDto.TotalAtendimentosRealizados = medicoGetDto.TotalAtendimentosRealizados;
+            medicoGetDto.Id = medicoModel.Id;
+            medicoGetDto.NomeCompleto = medicoModel.NomeCompleto;
+            medicoGetDto.InstituicaoEnsinoFormacao = medicoModel.InstituicaoEnsinoFormacao;
+            medicoGetDto.CadastroCrm = medicoModel.CadastroCrm;
+            medicoGetDto.Especializacao = medicoModel.Especializacao;
+            medicoGetDto.EstadoSistemaEnum = medicoModel.EstadoSistemaEnum;
+            medicoGetDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados;
 
             return Ok(medicoGetDto);
         }

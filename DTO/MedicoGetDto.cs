@@ -12,7 +12,7 @@ namespace LABMedicine.DTO
         public string InstituicaoEnsinoFormacao { get; set; }
         public string CadastroCrm { get; set; }
         public string Especializacao { get; set; }
-        public  EstadoSistemaEnum EstadoSistemaEnum { get; set; }  
+        public EstadoSistemaEnum EstadoSistemaEnum { get; set; }  
         public string TotalAtendimentosRealizados { get; set; }
     }
 }

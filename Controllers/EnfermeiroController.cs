@@ -13,9 +13,9 @@ namespace LABMedicine.Controllers
     [ApiController]
     public class EnfermeiroController : ControllerBase
     {
-        private readonly BancoDadosContext bancoDadosContext;
+            private readonly BancoDadosContext bancoDadosContext;
 
-        //Construtor com parametro (Injetado)
+            //Construtor com parametro (Injetado)
         public EnfermeiroController(BancoDadosContext bancoDadosContext)
         {
             this.bancoDadosContext = bancoDadosContext;
@@ -86,7 +86,7 @@ namespace LABMedicine.Controllers
                 listaGetDto.Add(enfermeiroGetDto);
             }
 
-            return Ok(listaGetDto);
+                return Ok(listaGetDto);
 
         }
 
@@ -97,78 +97,35 @@ namespace LABMedicine.Controllers
             var enfermeiroModel = bancoDadosContext.Enfermeiro.Find(id);
             // var enfermeiroMoldel = bancoDadosContext.Enfermeiro.Where(w => w.Id == id).FirstOrDefault();
 
-            if (enfermeiroModel == null)
-            {
-                return NotFound("Dados não encontrados no banco de dados");
-            }
-            EnfermeiroGetDto enfermeiroGetDto = new EnfermeiroGetDto();
-            enfermeiroGetDto.Id = enfermeiroModel.Id;
-            enfermeiroGetDto.NomeCompleto = enfermeiroModel.NomeCompleto;
-            enfermeiroGetDto.Genero = enfermeiroModel.Genero;
-            enfermeiroGetDto.Telefone = enfermeiroModel.Telefone;
-            enfermeiroGetDto.DataDeNascimento = enfermeiroModel.DataDeNascimento;
-            enfermeiroGetDto.CPF = enfermeiroModel.CPF;
-            enfermeiroGetDto.CadastroCOFEN = enfermeiroModel.CadastroCOFEN;
-            enfermeiroGetDto.InstituicaoEnsinoFormacao = enfermeiroModel.InstituicaoEnsinoFormacao;
+             if (enfermeiroModel == null)
+             {
+                 return NotFound("Dados não encontrados no banco de dados");
+             }
+
+             EnfermeiroGetDto enfermeiroGetDto = new EnfermeiroGetDto();
+             enfermeiroGetDto.Id = enfermeiroModel.Id;
+             enfermeiroGetDto.NomeCompleto = enfermeiroModel.NomeCompleto;
+             enfermeiroGetDto.Genero = enfermeiroModel.Genero;
+             enfermeiroGetDto.Telefone = enfermeiroModel.Telefone;
+             enfermeiroGetDto.DataDeNascimento = enfermeiroModel.DataDeNascimento;
+             enfermeiroGetDto.CPF = enfermeiroModel.CPF;
+             enfermeiroGetDto.CadastroCOFEN = enfermeiroModel.CadastroCOFEN;
+             enfermeiroGetDto.InstituicaoEnsinoFormacao = enfermeiroModel.InstituicaoEnsinoFormacao;
 
 
             return Ok(enfermeiroGetDto);
         }
-
-
-
-
-
-
-
-
-        //[HttpPut("enfermeiros/{id}")]
-        //    public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
-        //    {
-
-        //        if (id != enfermeiroUpdateDto.Id)
-        //        {
-        //            return NotFound("Não foi possível encontrar o enfermeiro informado.");
-        //        }
-
-
-        //        //Buscar por id no banco de dados
-        //        var enfermeiroModel = bancoDadosContext.Enfermeiro.Where(w => w.Id == enfermeiroUpdateDto.Id).FirstOrDefault();
-        //        if (enfermeiroModel != null)
-        //        {
-        //            enfermeiroModel.Id = enfermeiroUpdateDto.Id;
-        //            enfermeiroModel.NomeCompleto = enfermeiroUpdateDto.NomeCompleto;
-        //            enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroUpdateDto.InstituicaoEnsinoFormacao;
-        //            enfermeiroModel.CadastroCOFEN = enfermeiroUpdateDto.CadastroCOFEN;
-        //            enfermeiroModel.Genero = enfermeiroUpdateDto.Genero;
-        //            enfermeiroModel.DataDeNascimento = enfermeiroUpdateDto.DataDeNascimento;
-        //            enfermeiroModel.Telefone = enfermeiroUpdateDto.Telefone;
-        //            enfermeiroModel.CPF = enfermeiroUpdateDto.CPF;
-
-
-        //            bancoDadosContext.Attach(enfermeiroModel);
-        //            bancoDadosContext.Enfermeiro.Update(enfermeiroModel);
-        //            bancoDadosContext.Enfermeiro.Attach(enfermeiroModel);
-
-        //            bancoDadosContext.SaveChanges();
-        //            return Ok(enfermeiroUpdateDto);
-        //        }
-        //        else
-        //        {
-        //            return BadRequest("Não foi possível encontrar o enfermeiro informado.");
-
-        //        }
-        //    }
 
         [HttpPut("enfermeiros/{id}")]
         public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
         {
             // Buscar por id no banco de dados
             var enfermeiroModel = bancoDadosContext.Enfermeiro.SingleOrDefault(e => e.Id == id);
-            if (enfermeiroModel == null)
-            {
+
+             if (enfermeiroModel == null)
+             {
                 return NotFound("Não foi possível encontrar o enfermeiro informado.");
-            }
+             }
 
             // Atualizar informações do enfermeiro
             enfermeiroModel.NomeCompleto = enfermeiroUpdateDto.NomeCompleto;
@@ -192,27 +149,28 @@ namespace LABMedicine.Controllers
             var enfermeiroModel = bancoDadosContext.Enfermeiro.Find(id);
 
             //Verificar se o registro est� diferente de null
-            if (enfermeiroModel != null)
-            {
+           if (enfermeiroModel != null)
+           {
                 //Deletar o regitro no banco de dados
 
                 bancoDadosContext.Enfermeiro.Remove(enfermeiroModel);
                 bancoDadosContext.SaveChanges();
 
-                return Ok();
-            }
-            else
-            {
-                //se for null retorno um request de erro
-                return NotFound("Erro ao apagar o registro");
+            return Ok();
 
-            }
+           }
+           else
+           {
+               //se for null retorno um request de erro
+            return NotFound("Erro ao apagar o registro");
+           }
+
         }
        
-        }
+    }
 
 
-     }
+}
   
 
 

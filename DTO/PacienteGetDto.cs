@@ -5,7 +5,9 @@ namespace LABMedicine.DTO
     public class PacienteGetDto
     {
         public int Id { get; set; }
+        public string CPF { get; set; }
         public string NomeCompleto { get; set; }
+        public string DataDeNascimento { get; set; }
         public string ContatoDeEmergencia { get; set; }
         public string? Convenio { get; set; } 
         public string StatusAtendimento { get; set; }//Status de Atendimento: Um paciente pode estar com as seguintes situações:

@@ -9,12 +9,9 @@ namespace LABMedicine.Enumerator
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum EstadoSistemaEnum
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         Ativo = 0,
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         Inativo = 1
     }
 }

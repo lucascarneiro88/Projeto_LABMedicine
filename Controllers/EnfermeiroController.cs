@@ -1,10 +1,6 @@
 ﻿using LABMedicine.DTO;
 using LABMedicine.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using BusinessDomainValidationObjects;
-using Microsoft.EntityFrameworkCore;
-using LABMedicine.CustomValidation;
 using static LABMedicine.CustomValidation.CustomValidation;
 
 namespace LABMedicine.Controllers
@@ -19,71 +15,61 @@ namespace LABMedicine.Controllers
         public EnfermeiroController(BancoDadosContext bancoDadosContext)
         {
             this.bancoDadosContext = bancoDadosContext;
-
         }
+
         [HttpPost("enfermeiros")]
-        public ActionResult<EnfermeiroCreateDto> Post([FromBody] EnfermeiroCreateDto enfermeiroCreateDto)
+        public ActionResult<EnfermeiroDto> Post([FromBody] EnfermeiroDto enfermeiroDto)
         {
 
-
-
-
-            if (enfermeiroCreateDto.CPF == "cPf")
+            if (bancoDadosContext.Enfermeiro.Any(e => e.CPF == enfermeiroDto.CPF))
             {
-                return StatusCode(StatusCodes.Status409Conflict, "CPF Já cadastrado na base de dados");
+                return StatusCode(StatusCodes.Status409Conflict, $"Já existe cadastrado esse CPF {enfermeiroDto.CPF}.");
             }
-            if (!new checkCPF().IsValid(enfermeiroCreateDto.CPF))
+            if (!new checkCPF().IsValid(enfermeiroDto.CPF))
             {
-                return BadRequest("CPF inválido");
+                return BadRequest($"CPF inválido");
             }
-
-
 
             EnfermeiroModel model = new EnfermeiroModel();
 
             {
-                model.NomeCompleto = enfermeiroCreateDto.NomeCompleto;
-                model.CPF = enfermeiroCreateDto.CPF;
-                model.InstituicaoEnsinoFormacao = enfermeiroCreateDto.InstituicaoEnsinoFormacao;
-                model.CadastroCOFEN = enfermeiroCreateDto.CadastroCOFEN;
-                model.Telefone = enfermeiroCreateDto.Telefone;
-                model.DataDeNascimento = enfermeiroCreateDto.DataDeNascimento;
-                model.Genero = enfermeiroCreateDto.Genero;
-
+                model.NomeCompleto = enfermeiroDto.NomeCompleto;
+                model.CPF = enfermeiroDto.CPF;
+                model.InstituicaoEnsinoFormacao = enfermeiroDto.InstituicaoEnsinoFormacao;
+                model.CadastroCOFEN = enfermeiroDto.CadastroCOFEN;
+                model.Telefone = enfermeiroDto.Telefone;
+                model.DataDeNascimento = enfermeiroDto.DataDeNascimento;
+                model.Genero = enfermeiroDto.Genero;
             }
 
+               bancoDadosContext.Enfermeiro.Add(model);
+               bancoDadosContext.SaveChanges();
 
-            bancoDadosContext.Enfermeiro.Add(model);
+               enfermeiroDto.Id = model.Id;
 
-
-            bancoDadosContext.SaveChanges();
-
-            enfermeiroCreateDto.Id = model.Id;
-
-            return StatusCode(201, enfermeiroCreateDto);
+               return StatusCode(201, enfermeiroDto);
         }
 
-
         [HttpGet]
-        public ActionResult<List<EnfermeiroGetDto>> Get()
+        public ActionResult<List<EnfermeiroDto>> Get()
         {
             var listaEnfermeiroModel = bancoDadosContext.Enfermeiro;
-            List<EnfermeiroGetDto> listaGetDto = new List<EnfermeiroGetDto>();
+            List<EnfermeiroDto> listaGetDto = new List<EnfermeiroDto>();
 
             foreach (var item in listaEnfermeiroModel)
             {
-                var enfermeiroGetDto = new EnfermeiroGetDto();
-                enfermeiroGetDto.Id = item.Id;
-                enfermeiroGetDto.NomeCompleto = item.NomeCompleto;
-                enfermeiroGetDto.Genero = item.Genero;
-                enfermeiroGetDto.Telefone = item.Telefone;
-                enfermeiroGetDto.DataDeNascimento = item.DataDeNascimento;
-                enfermeiroGetDto.CPF = item.CPF;
-                enfermeiroGetDto.CadastroCOFEN = item.CadastroCOFEN;
-                enfermeiroGetDto.InstituicaoEnsinoFormacao = item.InstituicaoEnsinoFormacao;
+                var enfermeiroDto = new EnfermeiroDto();
+                enfermeiroDto.Id = item.Id;
+                enfermeiroDto.NomeCompleto = item.NomeCompleto;
+                enfermeiroDto.Genero = item.Genero;
+                enfermeiroDto.Telefone = item.Telefone;
+                enfermeiroDto.DataDeNascimento = item.DataDeNascimento;
+                enfermeiroDto.CPF = item.CPF;
+                enfermeiroDto.CadastroCOFEN = item.CadastroCOFEN;
+                enfermeiroDto.InstituicaoEnsinoFormacao = item.InstituicaoEnsinoFormacao;
 
 
-                listaGetDto.Add(enfermeiroGetDto);
+                listaGetDto.Add(enfermeiroDto);
             }
 
                 return Ok(listaGetDto);
@@ -91,7 +77,7 @@ namespace LABMedicine.Controllers
         }
 
         [HttpGet("enfermeiros/{id}")]
-        public ActionResult<EnfermeiroGetDto> Get([FromRoute] int id)
+        public ActionResult<EnfermeiroDto> Get([FromRoute] int id)
         {
             //Buscar o registro no banco de dados por >>>ID<<<
             var enfermeiroModel = bancoDadosContext.Enfermeiro.Find(id);
@@ -102,45 +88,47 @@ namespace LABMedicine.Controllers
                  return NotFound("Dados não encontrados no banco de dados");
              }
 
-             EnfermeiroGetDto enfermeiroGetDto = new EnfermeiroGetDto();
-             enfermeiroGetDto.Id = enfermeiroModel.Id;
-             enfermeiroGetDto.NomeCompleto = enfermeiroModel.NomeCompleto;
-             enfermeiroGetDto.Genero = enfermeiroModel.Genero;
-             enfermeiroGetDto.Telefone = enfermeiroModel.Telefone;
-             enfermeiroGetDto.DataDeNascimento = enfermeiroModel.DataDeNascimento;
-             enfermeiroGetDto.CPF = enfermeiroModel.CPF;
-             enfermeiroGetDto.CadastroCOFEN = enfermeiroModel.CadastroCOFEN;
-             enfermeiroGetDto.InstituicaoEnsinoFormacao = enfermeiroModel.InstituicaoEnsinoFormacao;
+             EnfermeiroDto enfermeiroDto = new EnfermeiroDto();
+             enfermeiroDto.Id = enfermeiroModel.Id;
+             enfermeiroDto.NomeCompleto = enfermeiroModel.NomeCompleto;
+             enfermeiroDto.Genero = enfermeiroModel.Genero;
+             enfermeiroDto.Telefone = enfermeiroModel.Telefone;
+             enfermeiroDto.DataDeNascimento = enfermeiroModel.DataDeNascimento;
+             enfermeiroDto.CPF = enfermeiroModel.CPF;
+             enfermeiroDto.CadastroCOFEN = enfermeiroModel.CadastroCOFEN;
+             enfermeiroDto.InstituicaoEnsinoFormacao = enfermeiroModel.InstituicaoEnsinoFormacao;
 
-
-            return Ok(enfermeiroGetDto);
+             return Ok(enfermeiroDto);
         }
 
         [HttpPut("enfermeiros/{id}")]
-        public ActionResult<EnfermeiroUpdateDto> Put(int id, [FromBody] EnfermeiroUpdateDto enfermeiroUpdateDto)
+        public ActionResult<EnfermeiroDto> Put(int id, [FromBody] EnfermeiroDto enfermeiroDto)
         {
+
+            
+          
             // Buscar por id no banco de dados
             var enfermeiroModel = bancoDadosContext.Enfermeiro.SingleOrDefault(e => e.Id == id);
 
              if (enfermeiroModel == null)
              {
-                return NotFound("Não foi possível encontrar o enfermeiro informado.");
+                return NotFound("Não foi possível encontrar registro informado.");
              }
 
             // Atualizar informações do enfermeiro
-            enfermeiroModel.NomeCompleto = enfermeiroUpdateDto.NomeCompleto;
-            enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroUpdateDto.InstituicaoEnsinoFormacao;
-            enfermeiroModel.CadastroCOFEN = enfermeiroUpdateDto.CadastroCOFEN;
-            enfermeiroModel.Genero = enfermeiroUpdateDto.Genero;
-            enfermeiroModel.DataDeNascimento = enfermeiroUpdateDto.DataDeNascimento;
-            enfermeiroModel.Telefone = enfermeiroUpdateDto.Telefone;
-            enfermeiroModel.CPF = enfermeiroUpdateDto.CPF;
+            enfermeiroModel.NomeCompleto = enfermeiroDto.NomeCompleto;
+            enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroDto.InstituicaoEnsinoFormacao;
+            enfermeiroModel.CadastroCOFEN = enfermeiroDto.CadastroCOFEN;
+            enfermeiroModel.Genero = enfermeiroDto.Genero;
+            enfermeiroModel.DataDeNascimento = enfermeiroDto.DataDeNascimento;
+            enfermeiroModel.Telefone = enfermeiroDto.Telefone;
+            enfermeiroModel.CPF = enfermeiroDto.CPF;
 
             bancoDadosContext.SaveChanges();
 
-            return Ok(enfermeiroUpdateDto);
+            return Ok(enfermeiroDto);
         }
-
+        
 
         [HttpDelete("enfermeiros/{id}")]
         public ActionResult Delete([FromRoute] int id)
@@ -162,7 +150,7 @@ namespace LABMedicine.Controllers
            else
            {
                //se for null retorno um request de erro
-            return NotFound("Erro ao apagar o registro");
+            return NotFound("Código não existente ");
            }
 
         }

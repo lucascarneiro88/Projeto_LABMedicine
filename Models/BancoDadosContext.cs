@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LABMedicine.Enumerator;
 
 
@@ -30,26 +26,28 @@ namespace LABMedicine.Models
                 {
                     Id = 1,
                     NomeCompleto = "Dr. Roberto Castro Medeiros",
+                    EstadoSistema = EstadoSistemaEnum.Ativo,
                     Genero = "Masculino",
                     DataDeNascimento = "02/02/1986",
                     CPF = "995.693.440-24",
                     Telefone = "84912333",
                     InstituicaoEnsinoFormacao = "UFSC",
                     CadastroCrm = "55666/SC",
-                    Especializacao = "Clinico Geral",
+                    Especializacao = EspecializacaoMedicoEnum.ClinicoGeral,
                     TotalAtendimentosRealizados = "0"
                 },
                 new MedicoModel
                 {
                     Id = 2,
                     NomeCompleto = "Dra. Alessandra Souza dos Santos",
+                    EstadoSistema = EstadoSistemaEnum.Ativo,
                     Genero = "Feminino",
                     DataDeNascimento = "01/05/1979",
                     CPF = "864.204.910-37",
                     Telefone = "98653256",
                     InstituicaoEnsinoFormacao = "UFSM",
                     CadastroCrm = "99666/RS",
-                    Especializacao = "Ortopedista",
+                    Especializacao = EspecializacaoMedicoEnum.Ortopedia,
                     TotalAtendimentosRealizados = "0"
                 }
 
@@ -81,7 +79,7 @@ namespace LABMedicine.Models
                 }
 
             );
-            modelBuilder.Entity<PacienteModel>().HasData(
+            _ = modelBuilder.Entity<PacienteModel>().HasData(
                new PacienteModel
                {
                    Id = 5,
@@ -94,8 +92,8 @@ namespace LABMedicine.Models
                    Telefone = "84759836",
                    ContatoDeEmergencia = "Gustavo 84925428",
                    Convenio = "Simed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 2
+                   StatusAtendimento = StatusAtendimentoEnum.NaoAtendido,
+                   TotalAtendimentos = "2"
 
                },
                new PacienteModel
@@ -110,8 +108,8 @@ namespace LABMedicine.Models
                    Telefone = "97563986",
                    ContatoDeEmergencia = "Juliana 91289713",
                    Convenio = "Sulmed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 2 
+                   StatusAtendimento = StatusAtendimentoEnum.Atendido,
+                   TotalAtendimentos = "2"
 
 
 
@@ -128,8 +126,8 @@ namespace LABMedicine.Models
                    Telefone = "84579683",
                    ContatoDeEmergencia = "Gabriela 98765400",
                    Convenio = "Unimed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 2
+                   StatusAtendimento = StatusAtendimentoEnum.NaoAtendido,
+                   TotalAtendimentos = "2"
 
                },
                new PacienteModel
@@ -144,8 +142,8 @@ namespace LABMedicine.Models
                    Telefone = "84579685",
                    ContatoDeEmergencia = "Mateus 94674924",
                    Convenio = "Help",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 1
+                   StatusAtendimento = StatusAtendimentoEnum.Atendido,
+                   TotalAtendimentos = "1"
 
                },
                new PacienteModel
@@ -160,9 +158,9 @@ namespace LABMedicine.Models
                    Telefone = "84593698",
                    ContatoDeEmergencia = "Fernanda 3214654",
                    Convenio = "Simed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 2
-                   
+                   StatusAtendimento = StatusAtendimentoEnum.AguardandoAtendimento,
+                   TotalAtendimentos = "2"
+
                },
                new PacienteModel
                {
@@ -174,8 +172,8 @@ namespace LABMedicine.Models
                    Telefone = "91689365",
                    ContatoDeEmergencia = "Maria 98515698",
                    Convenio = "Sulmed",
-                   StatusAtendimento = "Atendido",
-                   TotalAtendimentos = 0
+                   StatusAtendimento = StatusAtendimentoEnum.AguardandoAtendimento,
+                   TotalAtendimentos = "0"
 
 
 
@@ -192,8 +190,9 @@ namespace LABMedicine.Models
                    Telefone = "91642537",
                    ContatoDeEmergencia = "Mario 97556984",
                    Convenio = "Simed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 3
+                   StatusAtendimento = StatusAtendimentoEnum .AguardandoAtendimento,
+                   TotalAtendimentos = "3" 
+                   
 
                },
                new PacienteModel
@@ -208,8 +207,8 @@ namespace LABMedicine.Models
                    Telefone = "91989693",
                    ContatoDeEmergencia = "Sergio 88658479",
                    Convenio = "unimed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 2
+                   StatusAtendimento = StatusAtendimentoEnum.AguardandoAtendimento,
+                   TotalAtendimentos = "2"
 
                },
                new PacienteModel
@@ -224,8 +223,8 @@ namespace LABMedicine.Models
                    Telefone = "96939291",
                    ContatoDeEmergencia = "Gertrude 84547892",
                    Convenio = "Help",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 1
+                   StatusAtendimento = StatusAtendimentoEnum.AguardandoAtendimento,
+                   TotalAtendimentos = "4"
 
                },
                new PacienteModel
@@ -240,12 +239,12 @@ namespace LABMedicine.Models
                    Telefone = "97989495",
                    ContatoDeEmergencia = "Cesar 84548915",
                    Convenio = "Unimed",
-                   StatusAtendimento = "Aguardando atendimento",
-                   TotalAtendimentos = 0
+                   StatusAtendimento = StatusAtendimentoEnum.Atendido,
+                   TotalAtendimentos = "0"
 
                }
 
-           );
+           ); 
         }
     }
 }

@@ -23,8 +23,15 @@ namespace LABMedicine.Migrations
 
             modelBuilder.Entity("LABMedicine.Models.AtendimentoModel", b =>
                 {
-                    b.Property<string>("descricao")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdMedico")
                         .HasColumnType("int");
@@ -32,7 +39,11 @@ namespace LABMedicine.Migrations
                     b.Property<int>("IdPaciente")
                         .HasColumnType("int");
 
-                    b.HasKey("descricao");
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdMedico");
+
+                    b.HasIndex("IdPaciente");
 
                     b.ToTable("ATENDIMENTO");
                 });
@@ -120,12 +131,11 @@ namespace LABMedicine.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Especializacao")
-                        .IsRequired()
+                    b.Property<int>("Especializacao")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("int");
 
-                    b.Property<int>("EstadoSistemaEnum")
+                    b.Property<int>("EstadoSistema")
                         .HasColumnType("int");
 
                     b.Property<string>("Genero")
@@ -145,6 +155,7 @@ namespace LABMedicine.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TotalAtendimentosRealizados")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -158,8 +169,8 @@ namespace LABMedicine.Migrations
                             CPF = "995.693.440-24",
                             CadastroCrm = "55666/SC",
                             DataDeNascimento = "02/02/1986",
-                            Especializacao = "Clinico Geral",
-                            EstadoSistemaEnum = 0,
+                            Especializacao = 0,
+                            EstadoSistema = 0,
                             Genero = "Masculino",
                             InstituicaoEnsinoFormacao = "UFSC",
                             NomeCompleto = "Dr. Roberto Castro Medeiros",
@@ -172,8 +183,8 @@ namespace LABMedicine.Migrations
                             CPF = "864.204.910-37",
                             CadastroCrm = "99666/RS",
                             DataDeNascimento = "01/05/1979",
-                            Especializacao = "Ortopedista",
-                            EstadoSistemaEnum = 0,
+                            Especializacao = 7,
+                            EstadoSistema = 0,
                             Genero = "Feminino",
                             InstituicaoEnsinoFormacao = "UFSM",
                             NomeCompleto = "Dra. Alessandra Souza dos Santos",
@@ -219,15 +230,15 @@ namespace LABMedicine.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("StatusAtendimento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StatusAtendimento")
+                        .HasColumnType("int");
 
                     b.Property<string>("Telefone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalAtendimentos")
-                        .HasColumnType("int");
+                    b.Property<string>("TotalAtendimentos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -245,9 +256,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "02/01/1990",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte.Saulo da Silva",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 3,
                             Telefone = "84759836",
-                            TotalAtendimentos = 2
+                            TotalAtendimentos = "2"
                         },
                         new
                         {
@@ -260,9 +271,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "13/04/1977",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Humberto José Teixeira",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 2,
                             Telefone = "97563986",
-                            TotalAtendimentos = 2
+                            TotalAtendimentos = "2"
                         },
                         new
                         {
@@ -275,9 +286,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "26/01/1983",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Vanessa Torres ",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 3,
                             Telefone = "84579683",
-                            TotalAtendimentos = 2
+                            TotalAtendimentos = "2"
                         },
                         new
                         {
@@ -290,9 +301,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "16/04/1973",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Marcio Guedes",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 2,
                             Telefone = "84579685",
-                            TotalAtendimentos = 1
+                            TotalAtendimentos = "1"
                         },
                         new
                         {
@@ -305,9 +316,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "11/02/1998",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Maria Aparecida Souza",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 0,
                             Telefone = "84593698",
-                            TotalAtendimentos = 2
+                            TotalAtendimentos = "2"
                         },
                         new
                         {
@@ -318,9 +329,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "17/02/1969",
                             Genero = "Maculino",
                             NomeCompleto = "Pcte. Henrique Marques Soares",
-                            StatusAtendimento = "Atendido",
+                            StatusAtendimento = 0,
                             Telefone = "91689365",
-                            TotalAtendimentos = 0
+                            TotalAtendimentos = "0"
                         },
                         new
                         {
@@ -333,9 +344,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "01/03/2005",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Francisca Almeida dos Santos",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 0,
                             Telefone = "91642537",
-                            TotalAtendimentos = 3
+                            TotalAtendimentos = "3"
                         },
                         new
                         {
@@ -348,9 +359,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "15/04/2003",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. João Maria da Silva",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 0,
                             Telefone = "91989693",
-                            TotalAtendimentos = 2
+                            TotalAtendimentos = "2"
                         },
                         new
                         {
@@ -363,9 +374,9 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "04/02/1970",
                             Genero = "Masculino",
                             NomeCompleto = "Pcte. Alexandre Mattos",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 0,
                             Telefone = "96939291",
-                            TotalAtendimentos = 1
+                            TotalAtendimentos = "4"
                         },
                         new
                         {
@@ -378,10 +389,29 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "01/04/1988",
                             Genero = "Feminino",
                             NomeCompleto = "Pcte. Vitória Mengue",
-                            StatusAtendimento = "Aguardando atendimento",
+                            StatusAtendimento = 2,
                             Telefone = "97989495",
-                            TotalAtendimentos = 0
+                            TotalAtendimentos = "0"
                         });
+                });
+
+            modelBuilder.Entity("LABMedicine.Models.AtendimentoModel", b =>
+                {
+                    b.HasOne("LABMedicine.Models.MedicoModel", "Medico")
+                        .WithMany()
+                        .HasForeignKey("IdMedico")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LABMedicine.Models.PacienteModel", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("IdPaciente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medico");
+
+                    b.Navigation("Paciente");
                 });
 #pragma warning restore 612, 618
         }

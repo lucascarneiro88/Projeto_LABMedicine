@@ -13,19 +13,6 @@ namespace LABMedicine.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ATENDIMENTO",
-                columns: table => new
-                {
-                    descricao = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IdMedico = table.Column<int>(type: "int", nullable: false),
-                    IdPaciente = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ATENDIMENTO", x => x.descricao);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ENFERMEIRO",
                 columns: table => new
                 {
@@ -52,9 +39,9 @@ namespace LABMedicine.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InstituicaoEnsinoFormacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CadastroCrm = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Especializacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    EstadoSistemaEnum = table.Column<int>(type: "int", nullable: false),
-                    TotalAtendimentosRealizados = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Especializacao = table.Column<int>(type: "int", maxLength: 100, nullable: false),
+                    EstadoSistema = table.Column<int>(type: "int", nullable: false),
+                    TotalAtendimentosRealizados = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NomeCompleto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataDeNascimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -76,8 +63,8 @@ namespace LABMedicine.Migrations
                     Alergias = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CuidadosEspecificos = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Convenio = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatusAtendimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TotalAtendimentos = table.Column<int>(type: "int", nullable: false),
+                    StatusAtendimento = table.Column<int>(type: "int", nullable: false),
+                    TotalAtendimentos = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NomeCompleto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataDeNascimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -87,6 +74,33 @@ namespace LABMedicine.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PACIENTE", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ATENDIMENTO",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdMedico = table.Column<int>(type: "int", nullable: false),
+                    IdPaciente = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ATENDIMENTO", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ATENDIMENTO_MEDICO_IdMedico",
+                        column: x => x.IdMedico,
+                        principalTable: "MEDICO",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ATENDIMENTO_PACIENTE_IdPaciente",
+                        column: x => x.IdPaciente,
+                        principalTable: "PACIENTE",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -100,11 +114,11 @@ namespace LABMedicine.Migrations
 
             migrationBuilder.InsertData(
                 table: "MEDICO",
-                columns: new[] { "Id", "CPF", "CadastroCrm", "DataDeNascimento", "Especializacao", "EstadoSistemaEnum", "Genero", "InstituicaoEnsinoFormacao", "NomeCompleto", "Telefone", "TotalAtendimentosRealizados" },
+                columns: new[] { "Id", "CPF", "CadastroCrm", "DataDeNascimento", "Especializacao", "EstadoSistema", "Genero", "InstituicaoEnsinoFormacao", "NomeCompleto", "Telefone", "TotalAtendimentosRealizados" },
                 values: new object[,]
                 {
-                    { 1, "995.693.440-24", "55666/SC", "02/02/1986", "Clinico Geral", 0, "Masculino", "UFSC", "Dr. Roberto Castro Medeiros", "84912333", "0" },
-                    { 2, "864.204.910-37", "99666/RS", "01/05/1979", "Ortopedista", 0, "Feminino", "UFSM", "Dra. Alessandra Souza dos Santos", "98653256", "0" }
+                    { 1, "995.693.440-24", "55666/SC", "02/02/1986", 0, 0, "Masculino", "UFSC", "Dr. Roberto Castro Medeiros", "84912333", "0" },
+                    { 2, "864.204.910-37", "99666/RS", "01/05/1979", 7, 0, "Feminino", "UFSM", "Dra. Alessandra Souza dos Santos", "98653256", "0" }
                 });
 
             migrationBuilder.InsertData(
@@ -112,17 +126,27 @@ namespace LABMedicine.Migrations
                 columns: new[] { "Id", "Alergias", "CPF", "ContatoDeEmergencia", "Convenio", "CuidadosEspecificos", "DataDeNascimento", "Genero", "NomeCompleto", "StatusAtendimento", "Telefone", "TotalAtendimentos" },
                 values: new object[,]
                 {
-                    { 5, "não possui alergias", "578.330.130-21", "Gustavo 84925428", "Simed", "não necessita ", "02/01/1990", "Masculino", "Pcte.Saulo da Silva", "Aguardando atendimento", "84759836", 2 },
-                    { 6, "Alergico a Camarão | Rinite", "385.486.870-70", "Juliana 91289713", "Sulmed", "não necessita ", "13/04/1977", "Masculino", "Pcte. Humberto José Teixeira", "Aguardando atendimento", "97563986", 2 },
-                    { 7, "não possui alergias", "764.712.840-04", "Gabriela 98765400", "Unimed", "não necessita ", "26/01/1983", "Feminino", "Pcte. Vanessa Torres ", "Aguardando atendimento", "84579683", 2 },
-                    { 8, "não possui alergias", "167.149.340-09", "Mateus 94674924", "Help", "não necessita ", "16/04/1973", "Masculino", "Pcte. Marcio Guedes", "Aguardando atendimento", "84579685", 1 },
-                    { 9, "não possui alergias", "721.149.230-96", "Fernanda 3214654", "Simed", "não necessita ", "11/02/1998", "Feminino", "Pcte. Maria Aparecida Souza", "Aguardando atendimento", "84593698", 2 },
-                    { 10, null, "647.142.010-26", "Maria 98515698", "Sulmed", null, "17/02/1969", "Maculino", "Pcte. Henrique Marques Soares", "Atendido", "91689365", 0 },
-                    { 11, "não possui alergias", "628.234.450-64", "Mario 97556984", "Simed", "não necessita ", "01/03/2005", "Feminino", "Pcte. Francisca Almeida dos Santos", "Aguardando atendimento", "91642537", 3 },
-                    { 12, "não possui alergias", "628.234.450-64", "Sergio 88658479", "unimed", "não necessita ", "15/04/2003", "Masculino", "Pcte. João Maria da Silva", "Aguardando atendimento", "91989693", 2 },
-                    { 13, "não possui alergias", "781.389.900-82", "Gertrude 84547892", "Help", "não necessita ", "04/02/1970", "Masculino", "Pcte. Alexandre Mattos", "Aguardando atendimento", "96939291", 1 },
-                    { 14, "não possui alergias", "677.746.870-68", "Cesar 84548915", "Unimed", "não necessita ", "01/04/1988", "Feminino", "Pcte. Vitória Mengue", "Aguardando atendimento", "97989495", 0 }
+                    { 5, "não possui alergias", "578.330.130-21", "Gustavo 84925428", "Simed", "não necessita ", "02/01/1990", "Masculino", "Pcte.Saulo da Silva", 3, "84759836", "2" },
+                    { 6, "Alergico a Camarão | Rinite", "385.486.870-70", "Juliana 91289713", "Sulmed", "não necessita ", "13/04/1977", "Masculino", "Pcte. Humberto José Teixeira", 2, "97563986", "2" },
+                    { 7, "não possui alergias", "764.712.840-04", "Gabriela 98765400", "Unimed", "não necessita ", "26/01/1983", "Feminino", "Pcte. Vanessa Torres ", 3, "84579683", "2" },
+                    { 8, "não possui alergias", "167.149.340-09", "Mateus 94674924", "Help", "não necessita ", "16/04/1973", "Masculino", "Pcte. Marcio Guedes", 2, "84579685", "1" },
+                    { 9, "não possui alergias", "721.149.230-96", "Fernanda 3214654", "Simed", "não necessita ", "11/02/1998", "Feminino", "Pcte. Maria Aparecida Souza", 0, "84593698", "2" },
+                    { 10, null, "647.142.010-26", "Maria 98515698", "Sulmed", null, "17/02/1969", "Maculino", "Pcte. Henrique Marques Soares", 0, "91689365", "0" },
+                    { 11, "não possui alergias", "628.234.450-64", "Mario 97556984", "Simed", "não necessita ", "01/03/2005", "Feminino", "Pcte. Francisca Almeida dos Santos", 0, "91642537", "3" },
+                    { 12, "não possui alergias", "628.234.450-64", "Sergio 88658479", "unimed", "não necessita ", "15/04/2003", "Masculino", "Pcte. João Maria da Silva", 0, "91989693", "2" },
+                    { 13, "não possui alergias", "781.389.900-82", "Gertrude 84547892", "Help", "não necessita ", "04/02/1970", "Masculino", "Pcte. Alexandre Mattos", 0, "96939291", "4" },
+                    { 14, "não possui alergias", "677.746.870-68", "Cesar 84548915", "Unimed", "não necessita ", "01/04/1988", "Feminino", "Pcte. Vitória Mengue", 2, "97989495", "0" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ATENDIMENTO_IdMedico",
+                table: "ATENDIMENTO",
+                column: "IdMedico");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ATENDIMENTO_IdPaciente",
+                table: "ATENDIMENTO",
+                column: "IdPaciente");
         }
 
         /// <inheritdoc />

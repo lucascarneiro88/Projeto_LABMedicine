@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LABMedicine.DTO;
-using LABMedicine.Enumerator;
+﻿using LABMedicine.DTO;
 using LABMedicine.Models;
 using static LABMedicine.CustomValidation.CustomValidation;
 using Microsoft.AspNetCore.Mvc;
-
-
-
-
-
-
+using LABMedicine.Enumerator;
 
 namespace LABMedicine.Controllers
 {
@@ -28,14 +18,13 @@ namespace LABMedicine.Controllers
         }
 
         [HttpPost("pacientes")]
-        public ActionResult<PacienteCreateDto> Post([FromBody] PacienteCreateDto pacienteCreateDto)
+        public ActionResult<PacienteDto> Post([FromBody] PacienteDto pacienteDto)
         {
-
-            if (pacienteCreateDto.CPF == "cPF")
+            if (bancoDadosContext.Enfermeiro.Any(e => e.CPF == pacienteDto.CPF))
             {
-                return StatusCode(StatusCodes.Status409Conflict, "CPF Já cadastrado na base de dados");
+                return StatusCode(StatusCodes.Status409Conflict, $"Já existe  cadastrado este CPF {pacienteDto.CPF}.");
             }
-            if (!new checkCPF().IsValid(pacienteCreateDto.CPF))
+            if (!new checkCPF().IsValid(pacienteDto.CPF))
             {
                 return BadRequest("CPF inválido");
             }
@@ -44,56 +33,60 @@ namespace LABMedicine.Controllers
             PacienteModel model = new PacienteModel();
 
             {
-                model.NomeCompleto = pacienteCreateDto.NomeCompleto;
-                model.CPF = pacienteCreateDto.CPF;
-                model.ContatoDeEmergencia = pacienteCreateDto.ContatoDeEmergencia;
-                model.Convenio = pacienteCreateDto.Convenio;
-                model.StatusAtendimento = pacienteCreateDto.StatusAtendimento;
-                model.Alergias = string.Join("|", pacienteCreateDto.Alergias!);
-                model.CuidadosEspecificos = string.Join("|", pacienteCreateDto.CuidadosEspecificos!);
-
-
+                model.NomeCompleto = pacienteDto.NomeCompleto;
+                model.DataDeNascimento = pacienteDto.DataDeNascimento;
+                model.CPF = pacienteDto.CPF;
+                model.ContatoDeEmergencia = pacienteDto.ContatoDeEmergencia;
+                model.Convenio = pacienteDto.Convenio;
+                model.StatusAtendimento = pacienteDto.StatusAtendimento;
+                model.Alergias = string.Join("|", pacienteDto.Alergias!);
+                model.CuidadosEspecificos = string.Join("|", pacienteDto.CuidadosEspecificos!);
+                model.TotalAtendimentos = pacienteDto.TotalAtendimentos;
             }
 
-            bancoDadosContext.Paciente.Add(model);
-            bancoDadosContext.SaveChanges();
+               bancoDadosContext.Paciente.Add(model);
+               bancoDadosContext.SaveChanges();
+               pacienteDto.Id = model.Id;
 
-            return Ok(pacienteCreateDto);
+               return StatusCode(201, pacienteDto);
+          
         }
 
-
         [HttpGet("pacientes/status")]
-        public ActionResult<List<PacienteGetDto>> Get([FromQuery] string StatusAtendimento = "Atendido")//Ver se realmente se não é passado null para statusAtendimento
+        public ActionResult<List<PacienteDto>> Get([FromQuery] string StatusAtendimento = "Atendido")
         {
-                var listaPacienteModel = bancoDadosContext.Paciente.AsQueryable();//AsQueryable permitindo a utilização do método Where() sem gerar o erro de conversão.
-                //var listaPacienteModel = bancoDadosContext.Paciente;
-                List<PacienteGetDto> listaGetDto = new List<PacienteGetDto>();
+            var listaPacienteModel = bancoDadosContext.Paciente.AsQueryable();
+            List<PacienteDto> listaGetDto = new List<PacienteDto>();
 
             if (!string.IsNullOrEmpty(StatusAtendimento))
             {
-                // Filtrar os pacientes pelo status de atendimento
-                listaPacienteModel = listaPacienteModel.Where(p => p.StatusAtendimento == StatusAtendimento);
+                StatusAtendimentoEnum statusEnum = (StatusAtendimentoEnum)Enum.Parse(typeof(StatusAtendimentoEnum), StatusAtendimento, true);
+                listaPacienteModel = listaPacienteModel.Where(p => p.StatusAtendimento == statusEnum);
             }
 
             foreach (var item in listaPacienteModel)
             {
-                var pacienteGetDto = new PacienteGetDto();
-                pacienteGetDto.Id = item.Id;
-                pacienteGetDto.NomeCompleto = item.NomeCompleto;
-                pacienteGetDto.ContatoDeEmergencia = item.ContatoDeEmergencia;
-                pacienteGetDto.Convenio = item.Convenio;
-                pacienteGetDto.StatusAtendimento = item.StatusAtendimento;
-                pacienteGetDto.Alergias = item.Alergias;
-                pacienteGetDto.CuidadosEspecificos = item.CuidadosEspecificos;
+                var pacienteDto = new PacienteDto();
+                pacienteDto.Id = item.Id;
+                pacienteDto.NomeCompleto = item.NomeCompleto;
+                pacienteDto.DataDeNascimento = item.DataDeNascimento;
+                pacienteDto.CPF = item.CPF;
+                pacienteDto.ContatoDeEmergencia = item.ContatoDeEmergencia;
+                pacienteDto.Convenio = item.Convenio;
+                pacienteDto.StatusAtendimento = item.StatusAtendimento;
+                pacienteDto.Alergias = item.Alergias;
+                pacienteDto.CuidadosEspecificos = item.CuidadosEspecificos;
+                pacienteDto.TotalAtendimentos = item.TotalAtendimentos;
 
-
-                listaGetDto.Add(pacienteGetDto);
+                listaGetDto.Add(pacienteDto);
             }
+
                 return Ok(listaGetDto);
-        }   
- 
+        }
+
+
         [HttpGet("pacientes/{id}")]
-        public ActionResult<PacienteGetDto> Get([FromRoute] int id)
+        public ActionResult<PacienteDto> Get([FromRoute] int id)
         {
             var pacienteModel = bancoDadosContext.Paciente.Find(id);
             //var pacienteModel = bancoDadosContext.Paciente.Where(w => w.Id == id).FirstOrDefault();
@@ -103,48 +96,28 @@ namespace LABMedicine.Controllers
                 return NotFound("Dados não encontrados");
             }
 
-                PacienteGetDto pacienteGetDto = new PacienteGetDto();
-                pacienteGetDto.Id = pacienteModel.Id;
-                pacienteGetDto.NomeCompleto = pacienteModel.NomeCompleto;
-                pacienteGetDto.ContatoDeEmergencia = pacienteModel.ContatoDeEmergencia;
-                pacienteGetDto.Convenio = pacienteModel.Convenio;
-                pacienteGetDto.StatusAtendimento  = pacienteModel.StatusAtendimento;
-                pacienteGetDto.Alergias = pacienteModel.Alergias;
-                pacienteGetDto.CuidadosEspecificos = pacienteModel.CuidadosEspecificos;
-          
+                PacienteDto pacienteDto = new PacienteDto();
+                pacienteDto.Id = pacienteModel.Id;
+                pacienteDto.NomeCompleto = pacienteModel.NomeCompleto;
+                pacienteDto.DataDeNascimento = pacienteModel.DataDeNascimento;
+                pacienteDto.CPF = pacienteModel.CPF;
+                pacienteDto.ContatoDeEmergencia = pacienteModel.ContatoDeEmergencia;
+                pacienteDto.Convenio = pacienteModel.Convenio;
+                pacienteDto.StatusAtendimento  = pacienteModel.StatusAtendimento;
+                pacienteDto.Alergias = pacienteModel.Alergias;
+                pacienteDto.CuidadosEspecificos = pacienteModel.CuidadosEspecificos;
+                pacienteDto.TotalAtendimentos = pacienteModel.TotalAtendimentos;
 
-                return Ok(pacienteGetDto);
+
+                return Ok(pacienteDto);
         }
 
 
-
-        //    //Buscar o registro no banco de dados por >>>ID<<<
-        //    var enfermeiroModel = bancoDadosContext.Enfermeiro.Find(id);
-        //    // var enfermeiroMoldel = bancoDadosContext.Enfermeiro.Where(w => w.Id == id).FirstOrDefault();
-
-        //    if (enfermeiroModel == null)
-        //    {
-        //        return NotFound("Dados não encontrados no banco de dados");
-        //    }
-        //    EnfermeiroGetDto enfermeiroGetDto = new EnfermeiroGetDto();
-        //    enfermeiroGetDto.Id = enfermeiroModel.Id;
-        //    enfermeiroGetDto.NomeCompleto = enfermeiroModel.NomeCompleto;
-        //    enfermeiroGetDto.Genero = enfermeiroModel.Genero;
-        //    enfermeiroGetDto.Telefone = enfermeiroModel.Telefone;
-        //    enfermeiroGetDto.DataDeNascimento = enfermeiroModel.DataDeNascimento;
-        //    enfermeiroGetDto.CPF = enfermeiroModel.CPF;
-        //    enfermeiroGetDto.CadastroCOFEN = enfermeiroModel.CadastroCOFEN;
-        //    enfermeiroGetDto.InstituicaoEnsinoFormacao = enfermeiroModel.InstituicaoEnsinoFormacao;
-
-
-        //    return Ok(enfermeiroGetDto);
-        //}
-
         [HttpPut("pacientes/{id}")]
-        public ActionResult<PacienteCreateDto> Put([FromRoute] int id, [FromBody] PacienteCreateDto pacienteCreateDto)
+        public ActionResult<PacienteDto> Put([FromRoute] int id, [FromBody] PacienteDto pacienteDto)
         {
 
-            var pacienteModel = bancoDadosContext.Paciente.Where(w => w.Id == pacienteCreateDto.Id).FirstOrDefault();
+            var pacienteModel = bancoDadosContext.Paciente.Where(w => w.Id == pacienteDto.Id).FirstOrDefault();
 
             if (pacienteModel == null)
             {
@@ -154,13 +127,16 @@ namespace LABMedicine.Controllers
 
             if (pacienteModel != null)
             {
-                pacienteModel.Id = pacienteCreateDto.Id;
-                pacienteModel.NomeCompleto = pacienteCreateDto.NomeCompleto;
-                pacienteModel.ContatoDeEmergencia = pacienteCreateDto.ContatoDeEmergencia;
-                pacienteModel.Convenio = pacienteCreateDto.Convenio;
-                pacienteModel.StatusAtendimento = pacienteCreateDto.StatusAtendimento;
-                pacienteModel.Alergias = pacienteCreateDto.Alergias;
-                pacienteModel.CuidadosEspecificos = pacienteCreateDto.CuidadosEspecificos;
+                pacienteModel.Id = pacienteDto.Id;
+                pacienteModel.NomeCompleto = pacienteDto.NomeCompleto;
+                pacienteModel.DataDeNascimento = pacienteDto.DataDeNascimento;
+                pacienteModel.CPF = pacienteDto.CPF;
+                pacienteModel.ContatoDeEmergencia = pacienteDto.ContatoDeEmergencia;
+                pacienteModel.Convenio = pacienteDto.Convenio;
+                pacienteModel.StatusAtendimento = pacienteDto.StatusAtendimento;
+                pacienteModel.Alergias = pacienteDto.Alergias;
+                pacienteModel.CuidadosEspecificos = pacienteDto.CuidadosEspecificos;
+                pacienteModel.TotalAtendimentos = pacienteDto.TotalAtendimentos;
 
 
                 // bancoDadosContext.Paciente.Update(pacienteModel);
@@ -168,9 +144,7 @@ namespace LABMedicine.Controllers
 
                 bancoDadosContext.SaveChanges();
 
-
-
-                return Ok(pacienteCreateDto);
+                return Ok(pacienteDto);
             }
             else
             {
@@ -181,38 +155,28 @@ namespace LABMedicine.Controllers
         }
 
 
-            //[HttpPut("api/pacientes/{id}/status")]
-            //public ActionResult AtualizarStatusAtendimento([FromRoute] int id, [FromBody] StatusAtendimentoDto statusAtendimentoDto = "")
-            //{
-            //    var pacienteModel = bancoDadosContext.Paciente.FirstOrDefault(p => p.Id == id);
+        [HttpPut("pacientes/{id}/status")]
+        public ActionResult AtualizarStatusAtendimento([FromRoute] int id, [FromBody] StatusAtendimentoEnum statusAtendimento)
+        {
+            var pacienteModel = bancoDadosContext.Paciente.FirstOrDefault(p => p.Id == id);
 
-            //    if (pacienteModel == null)
-            //    {
-            //        return NotFound("Não foi possível encontrar registro .");
-            //    }
+            if (pacienteModel == null)
+            {
+                return NotFound("Não foi possível encontrar registro.");
+            }
 
-            //    // Validar se o campo "StatusAtendimentoEnum" pertence aos valores possíveis
-            //    if (!Enum.IsDefined(typeof(StatusAtendimentoEnum), statusAtendimentoDto.Status))
-            //    {
-            //        return BadRequest("Status de atendimento inválido.");
-            //    }
+            if (!Enum.IsDefined(typeof(StatusAtendimentoEnum), statusAtendimento))
+            {
+                return BadRequest("Status de atendimento inválido.");
+            }
 
-            //    pacienteModel.StatusAtendimento = statusAtendimentoDto.Status;
+            pacienteModel.StatusAtendimento = statusAtendimento;
 
-            //    bancoDadosContext.Paciente.Attach(pacienteModel);
-            //    bancoDadosContext.SaveChanges();
+            bancoDadosContext.Paciente.Attach(pacienteModel);
+            bancoDadosContext.SaveChanges();
 
-            //    return Ok(pacienteModel);
-            //}
-
-
-
-
-
-
-
-        
-
+            return Ok(pacienteModel);
+        }
 
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
@@ -232,20 +196,12 @@ namespace LABMedicine.Controllers
             else
             {
                 //se for null retorno um request de erro
-                return NotFound("Erro ao apagar o registro");
+                return NotFound("Código não existente ");
             }
            
-
-
-
         }
         
-
-
-
     }
-
-
 
 }
 

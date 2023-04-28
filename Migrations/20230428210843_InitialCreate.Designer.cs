@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LABMedicine.Migrations
 {
     [DbContext(typeof(BancoDadosContext))]
-    [Migration("20230427041941_InitialCreate")]
+    [Migration("20230428210843_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -99,7 +99,7 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "05/06/1984",
                             Genero = "Masculino",
                             InstituicaoEnsinoFormacao = "UFSM",
-                            NomeCompleto = "Enf. Willian Tito Silva",
+                            NomeCompleto = "Willian Tito Silva",
                             Telefone = "91869833"
                         },
                         new
@@ -110,7 +110,7 @@ namespace LABMedicine.Migrations
                             DataDeNascimento = "06/04/1992",
                             Genero = "Feminino",
                             InstituicaoEnsinoFormacao = "UFRS",
-                            NomeCompleto = "Enf. Maria Fernandes Marques",
+                            NomeCompleto = "Maria Fernandes Marques",
                             Telefone = "91698534"
                         });
                 });
@@ -176,7 +176,7 @@ namespace LABMedicine.Migrations
                             EstadoSistema = 0,
                             Genero = "Masculino",
                             InstituicaoEnsinoFormacao = "UFSC",
-                            NomeCompleto = "Dr. Roberto Castro Medeiros",
+                            NomeCompleto = " Roberto Castro Medeiros",
                             Telefone = "84912333",
                             TotalAtendimentosRealizados = "0"
                         },
@@ -190,7 +190,7 @@ namespace LABMedicine.Migrations
                             EstadoSistema = 0,
                             Genero = "Feminino",
                             InstituicaoEnsinoFormacao = "UFSM",
-                            NomeCompleto = "Dra. Alessandra Souza dos Santos",
+                            NomeCompleto = " Alessandra Souza dos Santos",
                             Telefone = "98653256",
                             TotalAtendimentosRealizados = "0"
                         });
@@ -258,7 +258,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "02/01/1990",
                             Genero = "Masculino",
-                            NomeCompleto = "Pcte.Saulo da Silva",
+                            NomeCompleto = "Saulo da Silva",
                             StatusAtendimento = 3,
                             Telefone = "84759836",
                             TotalAtendimentos = "2"
@@ -273,7 +273,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "13/04/1977",
                             Genero = "Masculino",
-                            NomeCompleto = "Pcte. Humberto José Teixeira",
+                            NomeCompleto = "Humberto José Teixeira",
                             StatusAtendimento = 2,
                             Telefone = "97563986",
                             TotalAtendimentos = "2"
@@ -288,7 +288,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "26/01/1983",
                             Genero = "Feminino",
-                            NomeCompleto = "Pcte. Vanessa Torres ",
+                            NomeCompleto = "Vanessa Torres ",
                             StatusAtendimento = 3,
                             Telefone = "84579683",
                             TotalAtendimentos = "2"
@@ -303,7 +303,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "16/04/1973",
                             Genero = "Masculino",
-                            NomeCompleto = "Pcte. Marcio Guedes",
+                            NomeCompleto = "Marcio Guedes",
                             StatusAtendimento = 2,
                             Telefone = "84579685",
                             TotalAtendimentos = "1"
@@ -318,7 +318,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "11/02/1998",
                             Genero = "Feminino",
-                            NomeCompleto = "Pcte. Maria Aparecida Souza",
+                            NomeCompleto = "Maria Aparecida Souza",
                             StatusAtendimento = 0,
                             Telefone = "84593698",
                             TotalAtendimentos = "2"
@@ -331,7 +331,7 @@ namespace LABMedicine.Migrations
                             Convenio = "Sulmed",
                             DataDeNascimento = "17/02/1969",
                             Genero = "Maculino",
-                            NomeCompleto = "Pcte. Henrique Marques Soares",
+                            NomeCompleto = "Henrique Marques Soares",
                             StatusAtendimento = 0,
                             Telefone = "91689365",
                             TotalAtendimentos = "0"
@@ -346,7 +346,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "01/03/2005",
                             Genero = "Feminino",
-                            NomeCompleto = "Pcte. Francisca Almeida dos Santos",
+                            NomeCompleto = "Francisca Almeida dos Santos",
                             StatusAtendimento = 0,
                             Telefone = "91642537",
                             TotalAtendimentos = "3"
@@ -361,7 +361,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "15/04/2003",
                             Genero = "Masculino",
-                            NomeCompleto = "Pcte. João Maria da Silva",
+                            NomeCompleto = "João Maria da Silva",
                             StatusAtendimento = 0,
                             Telefone = "91989693",
                             TotalAtendimentos = "2"
@@ -376,7 +376,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "04/02/1970",
                             Genero = "Masculino",
-                            NomeCompleto = "Pcte. Alexandre Mattos",
+                            NomeCompleto = "Alexandre Mattos",
                             StatusAtendimento = 0,
                             Telefone = "96939291",
                             TotalAtendimentos = "4"
@@ -391,7 +391,7 @@ namespace LABMedicine.Migrations
                             CuidadosEspecificos = "não necessita ",
                             DataDeNascimento = "01/04/1988",
                             Genero = "Feminino",
-                            NomeCompleto = "Pcte. Vitória Mengue",
+                            NomeCompleto = "Vitória Mengue",
                             StatusAtendimento = 2,
                             Telefone = "97989495",
                             TotalAtendimentos = "0"

@@ -44,7 +44,6 @@ namespace LABMedicine.Controllers
 
                bancoDadosContext.Enfermeiro.Add(model);
                bancoDadosContext.SaveChanges();
-
                enfermeiroDto.Id = model.Id;
 
                return StatusCode(201, enfermeiroDto);
@@ -124,6 +123,7 @@ namespace LABMedicine.Controllers
             enfermeiroModel.Telefone = enfermeiroDto.Telefone;
             enfermeiroModel.CPF = enfermeiroDto.CPF;
 
+            bancoDadosContext.Enfermeiro.Attach(enfermeiroModel);
             bancoDadosContext.SaveChanges();
 
             return Ok(enfermeiroDto);

@@ -22,18 +22,18 @@ namespace LABMedicine.Controllers
         [HttpPost("medicos")]
         public ActionResult<MedicoDto> Post([FromBody] MedicoDto medicoDto)
         {
-            if (bancoDadosContext.Medico.Any(e => e.CPF == medicoDto.CPF))
+            if (bancoDadosContext.Medico.Any(m => m.CPF == medicoDto.CPF ))
             {
-                return StatusCode(StatusCodes.Status409Conflict,$"Já existe  cadastrado com esse CPF {medicoDto.CPF}.");
+                return StatusCode(StatusCodes.Status409Conflict, $"Já existe cadastrado com o CPF {medicoDto.CPF}.");
             }
 
             if (!new checkCPF().IsValid(medicoDto.CPF))
             {
-               return BadRequest("CPF inválido");
+                return BadRequest("CPF inválido");
             }
 
-            MedicoModel model = new MedicoModel();
-            
+          
+                MedicoModel model = new MedicoModel();
 
             {
                 model.NomeCompleto = medicoDto.NomeCompleto;
@@ -44,35 +44,35 @@ namespace LABMedicine.Controllers
                 model.InstituicaoEnsinoFormacao = medicoDto.InstituicaoEnsinoFormacao;
                 model.Especializacao = medicoDto.Especializacao;
                 model.EstadoSistema = medicoDto.EstadoSistema;
-                model.TotalAtendimentosRealizados = medicoDto.TotalAtendimentosRealizados;
+                model.TotalAtendimentosRealizados = medicoDto.TotalAtendimentosRealizados + "1";
                 model.CadastroCrm = medicoDto.CadastroCrm;
+
             }
 
-               bancoDadosContext.Medico.Add(model);
-               bancoDadosContext.SaveChanges();
+            bancoDadosContext.Medico.Add(model);
+            bancoDadosContext.SaveChanges();
+            medicoDto.Id = model.Id;
 
-               medicoDto.Id = model.Id;
-
-              return StatusCode(201, medicoDto);
+            return StatusCode(201, medicoDto);
         }
 
-        [HttpGet("medicos/{id}")]
+    [HttpGet("medicos/{id}")]
         public ActionResult<MedicoDto> Get([FromRoute] int id)
         {
             //var medicoModel = bancoDadosContext.Medico.Find(id);
-                var medicoModel = bancoDadosContext.Medico.Where(w => w.Id == id).FirstOrDefault();
+            var medicoModel = bancoDadosContext.Medico.Where(w => w.Id == id).FirstOrDefault();
             if (medicoModel == null)
             {
                 return NotFound("Dados não encontrados no banco de dados");
             }
-                var medicoDto = new MedicoDto();
-                medicoDto.Id = medicoModel.Id;
-                medicoDto.NomeCompleto = medicoModel.NomeCompleto;
-                medicoDto.InstituicaoEnsinoFormacao = medicoModel.InstituicaoEnsinoFormacao;
-                medicoDto.CadastroCrm = medicoModel.CadastroCrm;
-                medicoDto.Especializacao = medicoModel.Especializacao;
-                medicoDto.EstadoSistema = medicoModel.EstadoSistema;
-                medicoDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados;
+            var medicoDto = new MedicoDto();
+            medicoDto.Id = medicoModel.Id;
+            medicoDto.NomeCompleto = medicoModel.NomeCompleto;
+            medicoDto.InstituicaoEnsinoFormacao = medicoModel.InstituicaoEnsinoFormacao;
+            medicoDto.CadastroCrm = medicoModel.CadastroCrm;
+            medicoDto.Especializacao = medicoModel.Especializacao;
+            medicoDto.EstadoSistema = medicoModel.EstadoSistema;
+            medicoDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados + "1";
 
             return Ok(medicoDto);
         }
@@ -80,20 +80,21 @@ namespace LABMedicine.Controllers
         [HttpGet("medicos")]
         public ActionResult<List<MedicoDto>> Get()
         {
-                var listaMedicoModel = bancoDadosContext.Medico;
+            var listaMedicoModel = bancoDadosContext.Medico;
 
-                List<MedicoDto> listaGetDto = new List<MedicoDto>();
+            List<MedicoDto> listaGetDto = new List<MedicoDto>();
 
             foreach (var medicoModel in listaMedicoModel)
             {
                 var medicoDto = new MedicoDto();
+                medicoDto.Id = medicoModel.Id;
                 medicoDto.Id = medicoModel.Id;
                 medicoDto.NomeCompleto = medicoModel.NomeCompleto;
                 medicoDto.InstituicaoEnsinoFormacao = medicoModel.InstituicaoEnsinoFormacao;
                 medicoDto.CadastroCrm = medicoModel.CadastroCrm;
                 medicoDto.Especializacao = medicoModel.Especializacao;
                 medicoDto.EstadoSistema = medicoModel.EstadoSistema;
-                medicoDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados;
+                medicoDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados + "1";
 
                 listaGetDto.Add(medicoDto);
             }
@@ -105,35 +106,39 @@ namespace LABMedicine.Controllers
         [HttpPut("medicos/{id}")]
         public ActionResult<MedicoDto> Put([FromRoute] int id, [FromBody] MedicoDto medicoDto)
         {
-                var medicoModel = bancoDadosContext.Medico.SingleOrDefault(m => m.Id == id);
+            var medicoModel = bancoDadosContext.Medico.SingleOrDefault(e => e.Id == id);
+            medicoModel.TotalAtendimentosRealizados = (int.Parse(medicoDto.TotalAtendimentosRealizados) + 1).ToString();
 
             if (medicoModel == null)
             {
                 return NotFound("Não foi possível encontrar o medico informado.");
             }
-        
-               medicoModel.NomeCompleto = medicoDto.NomeCompleto;
-               medicoModel.DataDeNascimento = medicoDto.DataDeNascimento;
-               medicoModel.Genero = medicoDto.Genero;
-               medicoModel.Telefone = medicoDto.Telefone;
-               medicoModel.CPF = medicoDto.CPF;
-               medicoModel.InstituicaoEnsinoFormacao = medicoDto.InstituicaoEnsinoFormacao;
-               medicoModel.CadastroCrm = medicoDto.CadastroCrm;
-               medicoModel.Especializacao = medicoDto.Especializacao;
-               medicoModel.EstadoSistema = medicoDto.EstadoSistema;
-               medicoModel.TotalAtendimentosRealizados = medicoDto.TotalAtendimentosRealizados;
-           
-               bancoDadosContext.SaveChanges();
 
-               return Ok(medicoDto);
-        
+            medicoModel.NomeCompleto = medicoDto.NomeCompleto;
+            medicoModel.DataDeNascimento = medicoDto.DataDeNascimento;
+            medicoModel.Genero = medicoDto.Genero;
+            medicoModel.Telefone = medicoDto.Telefone;
+            medicoModel.CPF = medicoDto.CPF;
+            medicoModel.InstituicaoEnsinoFormacao = medicoDto.InstituicaoEnsinoFormacao;
+            medicoModel.CadastroCrm = medicoDto.CadastroCrm;
+            medicoModel.Especializacao = medicoDto.Especializacao;
+            medicoModel.EstadoSistema = medicoDto.EstadoSistema;
+            medicoModel.TotalAtendimentosRealizados = medicoDto.TotalAtendimentosRealizados + "1";
+
+            bancoDadosContext.Medico.Attach(medicoModel);
+            bancoDadosContext.SaveChanges();
+
+            return Ok(medicoDto);
+
         }
+
         [HttpPut("medicos/{id}/status")]
-        public ActionResult<MedicoDto> UpdateMedicoStatus(int id, [FromBody] EstadoSistemaEnum estadoSistema)
+        public ActionResult<MedicoDto> AtualizarEstadoSistema([FromRoute] int id, [FromBody] EstadoSistemaEnum estadoSistema)
         {
             // Verificar se o médico existe
-            var medico = bancoDadosContext.Medico.SingleOrDefault(m => m.Id == id);
-            if (medico == null)
+            var medicoModel = bancoDadosContext.Medico.SingleOrDefault(m => m.Id == id);
+
+            if (medicoModel == null)
             {
                 return NotFound($"Médico com o identificador {id} não foi encontrado.");
             }
@@ -145,47 +150,42 @@ namespace LABMedicine.Controllers
             }
 
             // Atualizar o status do médico
-            medico.EstadoSistema = estadoSistema;
+            medicoModel.EstadoSistema = estadoSistema;
+
+            bancoDadosContext.Medico.Attach(medicoModel);
             bancoDadosContext.SaveChanges();
 
-            // Criar e retornar um objeto MedicoDto com os dados atualizados do médico
-            var medicoDto = new MedicoDto
-            {
-                Id = medico.Id,
-                NomeCompleto = medico.NomeCompleto,
-                InstituicaoEnsinoFormacao = medico.InstituicaoEnsinoFormacao,
-                CadastroCrm = medico.CadastroCrm,
-                Especializacao = medico.Especializacao,
-                EstadoSistema = medico.EstadoSistema,
-                TotalAtendimentosRealizados = medico.TotalAtendimentosRealizados
-            };
+            return Ok(medicoModel);
 
-            return medicoDto;
         }
-
-
-
+           
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-               //Verificar se existe registro no banco de dados
-               var medicoModel = bancoDadosContext.Medico.Find(id);
-               //Verificar se o registro est� diferente de null
+             //Verificar se existe registro no banco de dados
+             var medicoModel = bancoDadosContext.Medico.Find(id);
+             //Verificar se o registro est� diferente de null
 
-            if (medicoModel != null)
-            {
-                //Deletar o regitro no banco de dados
-                bancoDadosContext.Medico.Remove(medicoModel);
-                bancoDadosContext.SaveChanges();
-                return Ok();
-            }
-            else
-            {
-                //se for null retorno um request de erro
-                return NotFound("Código não existente ");
+             if (medicoModel != null)
+             {
+                  //Deletar o regitro no banco de dados
+                  bancoDadosContext.Medico.Remove(medicoModel);
+                  bancoDadosContext.SaveChanges();
+                    return Ok();
+             }
+             else
+             {
+                 //se for null retorno um request de erro
+                 return NotFound("Código não existente ");
+             }
+
+
             }
 
-        }
     }
 }
+
+
+
+
 

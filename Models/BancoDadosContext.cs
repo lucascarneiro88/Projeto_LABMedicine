@@ -25,7 +25,7 @@ namespace LABMedicine.Models
                 new MedicoModel
                 {
                     Id = 1,
-                    NomeCompleto = "Dr. Roberto Castro Medeiros",
+                    NomeCompleto = " Roberto Castro Medeiros",
                     EstadoSistema = EstadoSistemaEnum.Ativo,
                     Genero = "Masculino",
                     DataDeNascimento = "02/02/1986",
@@ -39,7 +39,7 @@ namespace LABMedicine.Models
                 new MedicoModel
                 {
                     Id = 2,
-                    NomeCompleto = "Dra. Alessandra Souza dos Santos",
+                    NomeCompleto = " Alessandra Souza dos Santos",
                     EstadoSistema = EstadoSistemaEnum.Ativo,
                     Genero = "Feminino",
                     DataDeNascimento = "01/05/1979",
@@ -58,7 +58,7 @@ namespace LABMedicine.Models
                 new EnfermeiroModel
                 {
                     Id = 3,
-                    NomeCompleto = "Enf. Willian Tito Silva",
+                    NomeCompleto = "Willian Tito Silva",
                     Genero = "Masculino",
                     DataDeNascimento = "05/06/1984",
                     CPF = "667.267.570-18",
@@ -69,7 +69,7 @@ namespace LABMedicine.Models
                 new EnfermeiroModel
                 {
                     Id = 4,
-                    NomeCompleto = "Enf. Maria Fernandes Marques",
+                    NomeCompleto = "Maria Fernandes Marques",
                     Genero = "Feminino",
                     DataDeNascimento = "06/04/1992",
                     CPF = "945.129.600-07",
@@ -83,7 +83,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 5,
-                   NomeCompleto = "Pcte.Saulo da Silva",
+                   NomeCompleto = "Saulo da Silva",
                    Alergias = "não possui alergias",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Masculino",
@@ -99,7 +99,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 6,
-                   NomeCompleto = "Pcte. Humberto José Teixeira",
+                   NomeCompleto = "Humberto José Teixeira",
                    Alergias = "Alergico a Camarão | Rinite",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Masculino",
@@ -117,7 +117,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 7,
-                   NomeCompleto = "Pcte. Vanessa Torres ",
+                   NomeCompleto = "Vanessa Torres ",
                    Alergias = "não possui alergias",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Feminino",
@@ -133,7 +133,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 8,
-                   NomeCompleto = "Pcte. Marcio Guedes",
+                   NomeCompleto = "Marcio Guedes",
                    Alergias = "não possui alergias",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Masculino",
@@ -149,7 +149,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 9,
-                   NomeCompleto = "Pcte. Maria Aparecida Souza",
+                   NomeCompleto = "Maria Aparecida Souza",
                    Alergias = "não possui alergias",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Feminino",
@@ -165,7 +165,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 10,
-                   NomeCompleto = "Pcte. Henrique Marques Soares",
+                   NomeCompleto = "Henrique Marques Soares",
                    Genero = "Maculino",
                    DataDeNascimento = "17/02/1969",
                    CPF = "647.142.010-26",
@@ -181,7 +181,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 11,
-                   NomeCompleto = "Pcte. Francisca Almeida dos Santos",
+                   NomeCompleto = "Francisca Almeida dos Santos",
                    Alergias = "não possui alergias",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Feminino",
@@ -198,7 +198,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 12,
-                   NomeCompleto = "Pcte. João Maria da Silva",
+                   NomeCompleto = "João Maria da Silva",
                    Alergias = "não possui alergias",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Masculino",
@@ -214,7 +214,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 13,
-                   NomeCompleto = "Pcte. Alexandre Mattos",
+                   NomeCompleto = "Alexandre Mattos",
                    Alergias = "não possui alergias",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Masculino",
@@ -230,7 +230,7 @@ namespace LABMedicine.Models
                new PacienteModel
                {
                    Id = 14,
-                   NomeCompleto = "Pcte. Vitória Mengue",
+                   NomeCompleto = "Vitória Mengue",
                    Alergias = "não possui alergias",
                    CuidadosEspecificos = "não necessita ",
                    Genero = "Feminino",

@@ -20,9 +20,9 @@ namespace LABMedicine.Controllers
         [HttpPost("pacientes")]
         public ActionResult<PacienteDto> Post([FromBody] PacienteDto pacienteDto)
         {
-            if (bancoDadosContext.Enfermeiro.Any(e => e.CPF == pacienteDto.CPF))
+            if (bancoDadosContext.Enfermeiro.Any(p => p.CPF == pacienteDto.CPF))
             {
-                return StatusCode(StatusCodes.Status409Conflict, $"Já existe  cadastrado este CPF {pacienteDto.CPF}.");
+                return StatusCode(StatusCodes.Status409Conflict, $"Já existe  cadastrado com este CPF {pacienteDto.CPF}.");
             }
             if (!new checkCPF().IsValid(pacienteDto.CPF))
             {
@@ -31,6 +31,7 @@ namespace LABMedicine.Controllers
 
 
             PacienteModel model = new PacienteModel();
+            model.TotalAtendimentos = (int.Parse(pacienteDto.TotalAtendimentos) + 1).ToString();
 
             {
                 model.NomeCompleto = pacienteDto.NomeCompleto;
@@ -44,6 +45,7 @@ namespace LABMedicine.Controllers
                 model.TotalAtendimentos = pacienteDto.TotalAtendimentos;
             }
 
+             
                bancoDadosContext.Paciente.Add(model);
                bancoDadosContext.SaveChanges();
                pacienteDto.Id = model.Id;
@@ -57,6 +59,7 @@ namespace LABMedicine.Controllers
         {
             var listaPacienteModel = bancoDadosContext.Paciente.AsQueryable();
             List<PacienteDto> listaGetDto = new List<PacienteDto>();
+
 
             if (!string.IsNullOrEmpty(StatusAtendimento))
             {
@@ -76,7 +79,8 @@ namespace LABMedicine.Controllers
                 pacienteDto.StatusAtendimento = item.StatusAtendimento;
                 pacienteDto.Alergias = item.Alergias;
                 pacienteDto.CuidadosEspecificos = item.CuidadosEspecificos;
-                pacienteDto.TotalAtendimentos = item.TotalAtendimentos;
+                pacienteDto.TotalAtendimentos = (item.TotalAtendimentos + 1).ToString();
+
 
                 listaGetDto.Add(pacienteDto);
             }
@@ -106,7 +110,7 @@ namespace LABMedicine.Controllers
                 pacienteDto.StatusAtendimento  = pacienteModel.StatusAtendimento;
                 pacienteDto.Alergias = pacienteModel.Alergias;
                 pacienteDto.CuidadosEspecificos = pacienteModel.CuidadosEspecificos;
-                pacienteDto.TotalAtendimentos = pacienteModel.TotalAtendimentos;
+                pacienteDto.TotalAtendimentos = pacienteModel.TotalAtendimentos + "1";
 
 
                 return Ok(pacienteDto);
@@ -118,6 +122,7 @@ namespace LABMedicine.Controllers
         {
 
             var pacienteModel = bancoDadosContext.Paciente.Where(w => w.Id == pacienteDto.Id).FirstOrDefault();
+            pacienteModel.TotalAtendimentos = (int.Parse(pacienteDto.TotalAtendimentos) + 1).ToString();
 
             if (pacienteModel == null)
             {
@@ -139,8 +144,8 @@ namespace LABMedicine.Controllers
                 pacienteModel.TotalAtendimentos = pacienteDto.TotalAtendimentos;
 
 
-                // bancoDadosContext.Paciente.Update(pacienteModel);
-                //bancoDadosContext.Paciente.Attach(pacienteModel);
+                 bancoDadosContext.Paciente.Update(pacienteModel);
+                 bancoDadosContext.Paciente.Attach(pacienteModel);
 
                 bancoDadosContext.SaveChanges();
 
@@ -153,12 +158,12 @@ namespace LABMedicine.Controllers
             }
 
         }
-
-
+      
         [HttpPut("pacientes/{id}/status")]
         public ActionResult AtualizarStatusAtendimento([FromRoute] int id, [FromBody] StatusAtendimentoEnum statusAtendimento)
         {
             var pacienteModel = bancoDadosContext.Paciente.FirstOrDefault(p => p.Id == id);
+
 
             if (pacienteModel == null)
             {

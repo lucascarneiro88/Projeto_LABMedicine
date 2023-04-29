@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LABMedicine.Migrations
 {
     [DbContext(typeof(BancoDadosContext))]
-    [Migration("20230429173722_InitialCreate")]
+    [Migration("20230429205842_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

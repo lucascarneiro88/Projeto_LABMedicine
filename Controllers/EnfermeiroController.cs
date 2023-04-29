@@ -34,6 +34,7 @@ namespace LABMedicine.Controllers
                 enfermeiroModel  = new EnfermeiroModel();
 
             {
+                enfermeiroDto.Id = enfermeiroModel.Id;
                 enfermeiroModel.NomeCompleto = enfermeiroDto.NomeCompleto;
                 enfermeiroModel.CPF = enfermeiroDto.CPF;
                 enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroDto.InstituicaoEnsinoFormacao;
@@ -90,8 +91,8 @@ namespace LABMedicine.Controllers
 
              EnfermeiroDto enfermeiroDto = new EnfermeiroDto();
              enfermeiroDto.Id = enfermeiroModel.Id;
-            enfermeiroDto.CPF = enfermeiroModel.CPF;
-            enfermeiroDto.NomeCompleto = enfermeiroModel.NomeCompleto;
+             enfermeiroDto.CPF = enfermeiroModel.CPF;
+             enfermeiroDto.NomeCompleto = enfermeiroModel.NomeCompleto;
              enfermeiroDto.Genero = enfermeiroModel.Genero;
              enfermeiroDto.Telefone = enfermeiroModel.Telefone;
              enfermeiroDto.DataDeNascimento = enfermeiroModel.DataDeNascimento;
@@ -116,6 +117,7 @@ namespace LABMedicine.Controllers
              }
 
             // Atualizar informações do enfermeiro
+            enfermeiroDto.Id = enfermeiroModel.Id;
             enfermeiroModel.NomeCompleto = enfermeiroDto.NomeCompleto;
             enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroDto.InstituicaoEnsinoFormacao;
             enfermeiroModel.CadastroCOFEN = enfermeiroDto.CadastroCOFEN;

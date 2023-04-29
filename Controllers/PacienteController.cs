@@ -36,6 +36,7 @@ namespace LABMedicine.Controllers
             pacienteModel.TotalAtendimentos = (pacienteDto.TotalAtendimentos++);
 
             {
+                pacienteModel.Id = pacienteDto.Id;
                 pacienteModel.NomeCompleto = pacienteDto.NomeCompleto;
                 pacienteModel.DataDeNascimento = pacienteDto.DataDeNascimento;
                 pacienteModel.CPF = pacienteDto.CPF;

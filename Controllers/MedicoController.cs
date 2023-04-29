@@ -39,6 +39,7 @@ namespace LABMedicine.Controllers
                 medicoModel = new MedicoModel();
 
             {
+                medicoModel.Id = medicoDto.Id;
                 medicoModel.NomeCompleto = medicoDto.NomeCompleto;
                 medicoModel.Genero = medicoDto.Genero;
                 medicoModel.DataDeNascimento = medicoDto.DataDeNascimento;
@@ -91,6 +92,7 @@ namespace LABMedicine.Controllers
             foreach (var medicoModel in listaMedicoModel)
             {
                 var medicoDto = new MedicoDto();
+                medicoDto.Id = medicoModel.Id;
                 medicoDto.CPF = medicoModel.CPF;
                 medicoDto.NomeCompleto = medicoModel.NomeCompleto;
                 medicoDto.InstituicaoEnsinoFormacao = medicoModel.InstituicaoEnsinoFormacao;
@@ -116,7 +118,7 @@ namespace LABMedicine.Controllers
             {
                 return NotFound("Não foi possível encontrar o medico informado.");
             }
-
+            medicoModel.Id = medicoDto.Id;
             medicoModel.NomeCompleto = medicoDto.NomeCompleto;
             medicoModel.CPF = medicoDto.CPF;
             medicoModel.DataDeNascimento = medicoDto.DataDeNascimento;

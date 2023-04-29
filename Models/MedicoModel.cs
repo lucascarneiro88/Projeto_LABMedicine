@@ -21,7 +21,7 @@ namespace LABMedicine.Models
         [MaxLength(100)]
         public EspecializacaoMedicoEnum Especializacao { get; set; }
         public EstadoSistemaEnum EstadoSistema { get; set; } 
-        public string TotalAtendimentosRealizados { get; set; } 
+        public int TotalAtendimentosRealizados { get; set; } 
        
 
 

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LABMedicine.Migrations
 {
     [DbContext(typeof(BancoDadosContext))]
-    [Migration("20230428210843_InitialCreate")]
+    [Migration("20230429011807_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -157,9 +157,8 @@ namespace LABMedicine.Migrations
                     b.Property<string>("Telefone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TotalAtendimentosRealizados")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TotalAtendimentosRealizados")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -178,7 +177,7 @@ namespace LABMedicine.Migrations
                             InstituicaoEnsinoFormacao = "UFSC",
                             NomeCompleto = " Roberto Castro Medeiros",
                             Telefone = "84912333",
-                            TotalAtendimentosRealizados = "0"
+                            TotalAtendimentosRealizados = 2
                         },
                         new
                         {
@@ -192,7 +191,7 @@ namespace LABMedicine.Migrations
                             InstituicaoEnsinoFormacao = "UFSM",
                             NomeCompleto = " Alessandra Souza dos Santos",
                             Telefone = "98653256",
-                            TotalAtendimentosRealizados = "0"
+                            TotalAtendimentosRealizados = 0
                         });
                 });
 
@@ -239,9 +238,8 @@ namespace LABMedicine.Migrations
                     b.Property<string>("Telefone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TotalAtendimentos")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TotalAtendimentos")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -261,7 +259,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Saulo da Silva",
                             StatusAtendimento = 3,
                             Telefone = "84759836",
-                            TotalAtendimentos = "2"
+                            TotalAtendimentos = 2
                         },
                         new
                         {
@@ -276,7 +274,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Humberto José Teixeira",
                             StatusAtendimento = 2,
                             Telefone = "97563986",
-                            TotalAtendimentos = "2"
+                            TotalAtendimentos = 2
                         },
                         new
                         {
@@ -291,7 +289,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Vanessa Torres ",
                             StatusAtendimento = 3,
                             Telefone = "84579683",
-                            TotalAtendimentos = "2"
+                            TotalAtendimentos = 2
                         },
                         new
                         {
@@ -306,7 +304,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Marcio Guedes",
                             StatusAtendimento = 2,
                             Telefone = "84579685",
-                            TotalAtendimentos = "1"
+                            TotalAtendimentos = 1
                         },
                         new
                         {
@@ -321,7 +319,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Maria Aparecida Souza",
                             StatusAtendimento = 0,
                             Telefone = "84593698",
-                            TotalAtendimentos = "2"
+                            TotalAtendimentos = 2
                         },
                         new
                         {
@@ -334,7 +332,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Henrique Marques Soares",
                             StatusAtendimento = 0,
                             Telefone = "91689365",
-                            TotalAtendimentos = "0"
+                            TotalAtendimentos = 0
                         },
                         new
                         {
@@ -349,7 +347,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Francisca Almeida dos Santos",
                             StatusAtendimento = 0,
                             Telefone = "91642537",
-                            TotalAtendimentos = "3"
+                            TotalAtendimentos = 3
                         },
                         new
                         {
@@ -364,7 +362,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "João Maria da Silva",
                             StatusAtendimento = 0,
                             Telefone = "91989693",
-                            TotalAtendimentos = "2"
+                            TotalAtendimentos = 2
                         },
                         new
                         {
@@ -379,7 +377,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Alexandre Mattos",
                             StatusAtendimento = 0,
                             Telefone = "96939291",
-                            TotalAtendimentos = "4"
+                            TotalAtendimentos = 4
                         },
                         new
                         {
@@ -394,7 +392,7 @@ namespace LABMedicine.Migrations
                             NomeCompleto = "Vitória Mengue",
                             StatusAtendimento = 2,
                             Telefone = "97989495",
-                            TotalAtendimentos = "0"
+                            TotalAtendimentos = 0
                         });
                 });
 

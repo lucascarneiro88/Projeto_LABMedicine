@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static LABMedicine.CustomValidation.CustomValidation;
 
 namespace LABMedicine.DTO
 {
@@ -6,6 +7,8 @@ namespace LABMedicine.DTO
     { 
 
         public int Id { get; set; }
+        [Required]
+        [checkCPF(ErrorMessage = "Por favor, informar um CPF válido, somente números!")]
         public string CPF { get; set; }
         public string NomeCompleto { get; set; }
         public string DataDeNascimento { get; set; }

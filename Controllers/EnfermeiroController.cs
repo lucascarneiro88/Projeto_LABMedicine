@@ -21,30 +21,32 @@ namespace LABMedicine.Controllers
         public ActionResult<EnfermeiroDto> Post([FromBody] EnfermeiroDto enfermeiroDto)
         {
 
-            if (bancoDadosContext.Enfermeiro.Any(e => e.CPF == enfermeiroDto.CPF))
-            {
-                return StatusCode(StatusCodes.Status409Conflict, $"Já existe cadastrado esse CPF {enfermeiroDto.CPF}.");
-            }
+            
             if (!new checkCPF().IsValid(enfermeiroDto.CPF))
             {
                 return BadRequest($"CPF inválido");
             }
-
-            EnfermeiroModel model = new EnfermeiroModel();
-
+            var enfermeiroModel = bancoDadosContext.Enfermeiro.FirstOrDefault(e => e.CPF == enfermeiroDto.CPF);
+            if (enfermeiroModel != null)
             {
-                model.NomeCompleto = enfermeiroDto.NomeCompleto;
-                model.CPF = enfermeiroDto.CPF;
-                model.InstituicaoEnsinoFormacao = enfermeiroDto.InstituicaoEnsinoFormacao;
-                model.CadastroCOFEN = enfermeiroDto.CadastroCOFEN;
-                model.Telefone = enfermeiroDto.Telefone;
-                model.DataDeNascimento = enfermeiroDto.DataDeNascimento;
-                model.Genero = enfermeiroDto.Genero;
+                return StatusCode(StatusCodes.Status409Conflict, $"Já existe cadastrado esse CPF {enfermeiroDto.CPF}.");
             }
 
-               bancoDadosContext.Enfermeiro.Add(model);
+                enfermeiroModel  = new EnfermeiroModel();
+
+            {
+                enfermeiroModel.NomeCompleto = enfermeiroDto.NomeCompleto;
+                enfermeiroModel.CPF = enfermeiroDto.CPF;
+                enfermeiroModel.InstituicaoEnsinoFormacao = enfermeiroDto.InstituicaoEnsinoFormacao;
+                enfermeiroModel.CadastroCOFEN = enfermeiroDto.CadastroCOFEN;
+                enfermeiroModel.Telefone = enfermeiroDto.Telefone;
+                enfermeiroModel.DataDeNascimento = enfermeiroDto.DataDeNascimento;
+                enfermeiroModel.Genero = enfermeiroDto.Genero;
+            }
+
+               bancoDadosContext.Enfermeiro.Add(enfermeiroModel);
                bancoDadosContext.SaveChanges();
-               enfermeiroDto.Id = model.Id;
+               enfermeiroDto.Id = enfermeiroModel.Id;
 
                return StatusCode(201, enfermeiroDto);
         }
@@ -59,11 +61,11 @@ namespace LABMedicine.Controllers
             {
                 var enfermeiroDto = new EnfermeiroDto();
                 enfermeiroDto.Id = item.Id;
+                enfermeiroDto.CPF = item.CPF;
                 enfermeiroDto.NomeCompleto = item.NomeCompleto;
                 enfermeiroDto.Genero = item.Genero;
                 enfermeiroDto.Telefone = item.Telefone;
                 enfermeiroDto.DataDeNascimento = item.DataDeNascimento;
-                enfermeiroDto.CPF = item.CPF;
                 enfermeiroDto.CadastroCOFEN = item.CadastroCOFEN;
                 enfermeiroDto.InstituicaoEnsinoFormacao = item.InstituicaoEnsinoFormacao;
 
@@ -89,11 +91,11 @@ namespace LABMedicine.Controllers
 
              EnfermeiroDto enfermeiroDto = new EnfermeiroDto();
              enfermeiroDto.Id = enfermeiroModel.Id;
-             enfermeiroDto.NomeCompleto = enfermeiroModel.NomeCompleto;
+            enfermeiroDto.CPF = enfermeiroModel.CPF;
+            enfermeiroDto.NomeCompleto = enfermeiroModel.NomeCompleto;
              enfermeiroDto.Genero = enfermeiroModel.Genero;
              enfermeiroDto.Telefone = enfermeiroModel.Telefone;
              enfermeiroDto.DataDeNascimento = enfermeiroModel.DataDeNascimento;
-             enfermeiroDto.CPF = enfermeiroModel.CPF;
              enfermeiroDto.CadastroCOFEN = enfermeiroModel.CadastroCOFEN;
              enfermeiroDto.InstituicaoEnsinoFormacao = enfermeiroModel.InstituicaoEnsinoFormacao;
 

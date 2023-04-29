@@ -5,8 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-
+using static LABMedicine.CustomValidation.CustomValidation;
 
 namespace LABMedicine.Base
 {
@@ -26,7 +25,9 @@ namespace LABMedicine.Base
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         
         public string DataDeNascimento { get; set; }  //Data de Nascimento: Obrigatório, data válida.
-        public string? CPF { get; set; }//CPF: Deve ser texto
+        [Required]
+        [checkCPF(ErrorMessage = "Por favor, informar um CPF válido, somente números!")]
+        public string CPF { get; set; }//CPF: Deve ser texto
 
         public string? Telefone { get; set; }//Telefone: Deve ser texto
         

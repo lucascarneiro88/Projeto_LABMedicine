@@ -19,39 +19,42 @@ namespace LABMedicine.Controllers
             this.bancoDadosContext = bancoDadosContext;
         }
 
+
         [HttpPost("medicos")]
         public ActionResult<MedicoDto> Post([FromBody] MedicoDto medicoDto)
         {
-            if (bancoDadosContext.Medico.Any(m => m.CPF == medicoDto.CPF ))
-            {
-                return StatusCode(StatusCodes.Status409Conflict, $"Já existe cadastrado com o CPF {medicoDto.CPF}.");
-            }
+            
 
             if (!new checkCPF().IsValid(medicoDto.CPF))
             {
                 return BadRequest("CPF inválido");
             }
+            var medicoModel = bancoDadosContext.Medico.FirstOrDefault(m => m.CPF == medicoDto.CPF);
+            if (medicoModel != null)
+            {
+                return StatusCode(StatusCodes.Status409Conflict, $"Já existe cadastrado esse CPF {medicoDto.CPF}.");
+            }
 
-          
-                MedicoModel model = new MedicoModel();
+
+                medicoModel = new MedicoModel();
 
             {
-                model.NomeCompleto = medicoDto.NomeCompleto;
-                model.Genero = medicoDto.Genero;
-                model.DataDeNascimento = medicoDto.DataDeNascimento;
-                model.Telefone = medicoDto.Telefone;
-                model.CPF = medicoDto.CPF;
-                model.InstituicaoEnsinoFormacao = medicoDto.InstituicaoEnsinoFormacao;
-                model.Especializacao = medicoDto.Especializacao;
-                model.EstadoSistema = medicoDto.EstadoSistema;
-                model.TotalAtendimentosRealizados = medicoDto.TotalAtendimentosRealizados + "1";
-                model.CadastroCrm = medicoDto.CadastroCrm;
+                medicoModel.NomeCompleto = medicoDto.NomeCompleto;
+                medicoModel.Genero = medicoDto.Genero;
+                medicoModel.DataDeNascimento = medicoDto.DataDeNascimento;
+                medicoModel.Telefone = medicoDto.Telefone;
+                medicoModel.CPF = medicoDto.CPF;
+                medicoModel.InstituicaoEnsinoFormacao = medicoDto.InstituicaoEnsinoFormacao;
+                medicoModel.Especializacao = medicoDto.Especializacao;
+                medicoModel.EstadoSistema = medicoDto.EstadoSistema;
+                medicoModel.TotalAtendimentosRealizados = medicoDto.TotalAtendimentosRealizados ++;
+                medicoModel.CadastroCrm = medicoDto.CadastroCrm;
 
             }
 
-            bancoDadosContext.Medico.Add(model);
+            bancoDadosContext.Medico.Add(medicoModel);
             bancoDadosContext.SaveChanges();
-            medicoDto.Id = model.Id;
+            medicoDto.Id = medicoModel.Id;
 
             return StatusCode(201, medicoDto);
         }
@@ -67,12 +70,13 @@ namespace LABMedicine.Controllers
             }
             var medicoDto = new MedicoDto();
             medicoDto.Id = medicoModel.Id;
+            medicoDto.CPF = medicoModel.CPF;
             medicoDto.NomeCompleto = medicoModel.NomeCompleto;
             medicoDto.InstituicaoEnsinoFormacao = medicoModel.InstituicaoEnsinoFormacao;
             medicoDto.CadastroCrm = medicoModel.CadastroCrm;
             medicoDto.Especializacao = medicoModel.Especializacao;
             medicoDto.EstadoSistema = medicoModel.EstadoSistema;
-            medicoDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados + "1";
+            medicoDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados ++;
 
             return Ok(medicoDto);
         }
@@ -87,14 +91,13 @@ namespace LABMedicine.Controllers
             foreach (var medicoModel in listaMedicoModel)
             {
                 var medicoDto = new MedicoDto();
-                medicoDto.Id = medicoModel.Id;
-                medicoDto.Id = medicoModel.Id;
+                medicoDto.CPF = medicoModel.CPF;
                 medicoDto.NomeCompleto = medicoModel.NomeCompleto;
                 medicoDto.InstituicaoEnsinoFormacao = medicoModel.InstituicaoEnsinoFormacao;
                 medicoDto.CadastroCrm = medicoModel.CadastroCrm;
                 medicoDto.Especializacao = medicoModel.Especializacao;
                 medicoDto.EstadoSistema = medicoModel.EstadoSistema;
-                medicoDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados + "1";
+                medicoDto.TotalAtendimentosRealizados = medicoModel.TotalAtendimentosRealizados ++;
 
                 listaGetDto.Add(medicoDto);
             }
@@ -107,7 +110,7 @@ namespace LABMedicine.Controllers
         public ActionResult<MedicoDto> Put([FromRoute] int id, [FromBody] MedicoDto medicoDto)
         {
             var medicoModel = bancoDadosContext.Medico.SingleOrDefault(e => e.Id == id);
-            medicoModel.TotalAtendimentosRealizados = (int.Parse(medicoDto.TotalAtendimentosRealizados) + 1).ToString();
+            medicoModel.TotalAtendimentosRealizados = (medicoDto.TotalAtendimentosRealizados++);
 
             if (medicoModel == null)
             {
@@ -115,15 +118,15 @@ namespace LABMedicine.Controllers
             }
 
             medicoModel.NomeCompleto = medicoDto.NomeCompleto;
+            medicoModel.CPF = medicoDto.CPF;
             medicoModel.DataDeNascimento = medicoDto.DataDeNascimento;
             medicoModel.Genero = medicoDto.Genero;
             medicoModel.Telefone = medicoDto.Telefone;
-            medicoModel.CPF = medicoDto.CPF;
             medicoModel.InstituicaoEnsinoFormacao = medicoDto.InstituicaoEnsinoFormacao;
             medicoModel.CadastroCrm = medicoDto.CadastroCrm;
             medicoModel.Especializacao = medicoDto.Especializacao;
             medicoModel.EstadoSistema = medicoDto.EstadoSistema;
-            medicoModel.TotalAtendimentosRealizados = medicoDto.TotalAtendimentosRealizados + "1";
+            medicoModel.TotalAtendimentosRealizados = medicoDto.TotalAtendimentosRealizados ++;
 
             bancoDadosContext.Medico.Attach(medicoModel);
             bancoDadosContext.SaveChanges();
@@ -135,13 +138,6 @@ namespace LABMedicine.Controllers
         [HttpPut("medicos/{id}/status")]
         public ActionResult<MedicoDto> AtualizarEstadoSistema([FromRoute] int id, [FromBody] EstadoSistemaEnum estadoSistema)
         {
-            // Verificar se o médico existe
-            var medicoModel = bancoDadosContext.Medico.SingleOrDefault(m => m.Id == id);
-
-            if (medicoModel == null)
-            {
-                return NotFound($"Médico com o identificador {id} não foi encontrado.");
-            }
 
             // Verificar se o status informado é válido
             if (!Enum.IsDefined(typeof(EstadoSistemaEnum), estadoSistema))
@@ -149,6 +145,14 @@ namespace LABMedicine.Controllers
                 return BadRequest($"O status {estadoSistema} não é um valor válido para o campo status.");
             }
 
+            // Verificar se o médico existe
+            var medicoModel = bancoDadosContext.Medico.SingleOrDefault(m => m.Id == id);
+
+            if (medicoModel == null)
+            {
+                return NotFound($"Médico com o identificador {id} não foi encontrado.");
+            }
+            
             // Atualizar o status do médico
             medicoModel.EstadoSistema = estadoSistema;
 
@@ -158,7 +162,7 @@ namespace LABMedicine.Controllers
             return Ok(medicoModel);
 
         }
-           
+
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {

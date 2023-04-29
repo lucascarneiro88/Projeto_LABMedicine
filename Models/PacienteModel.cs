@@ -23,7 +23,7 @@ namespace LABMedicine.Models
             
             public StatusAtendimentoEnum StatusAtendimento { get; set; }
             
-            public string TotalAtendimentos { get; set; }
+            public int TotalAtendimentos { get; set; }
 
         }
 

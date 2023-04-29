@@ -29,7 +29,7 @@ Add-Migration InitialCreate
 
 
 
-Update-Database :
+Update-Database 
 
  aplica as alterações no banco de dados e criar as tabelas e colunas necessárias para representar o seu modelo de dados.
 

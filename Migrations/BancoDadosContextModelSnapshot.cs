@@ -41,10 +41,6 @@ namespace LABMedicine.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdMedico");
-
-                    b.HasIndex("IdPaciente");
-
                     b.ToTable("ATENDIMENTO");
                 });
 
@@ -57,6 +53,7 @@ namespace LABMedicine.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CPF")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CadastroCOFEN")
@@ -121,6 +118,7 @@ namespace LABMedicine.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CPF")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CadastroCrm")
@@ -204,6 +202,7 @@ namespace LABMedicine.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CPF")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContatoDeEmergencia")
@@ -391,25 +390,6 @@ namespace LABMedicine.Migrations
                             Telefone = "97989495",
                             TotalAtendimentos = 0
                         });
-                });
-
-            modelBuilder.Entity("LABMedicine.Models.AtendimentoModel", b =>
-                {
-                    b.HasOne("LABMedicine.Models.MedicoModel", "Medico")
-                        .WithMany()
-                        .HasForeignKey("IdMedico")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LABMedicine.Models.PacienteModel", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Medico");
-
-                    b.Navigation("Paciente");
                 });
 #pragma warning restore 612, 618
         }

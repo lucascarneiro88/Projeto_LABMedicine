@@ -13,6 +13,21 @@ namespace LABMedicine.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ATENDIMENTO",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdMedico = table.Column<int>(type: "int", nullable: false),
+                    IdPaciente = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ATENDIMENTO", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ENFERMEIRO",
                 columns: table => new
                 {
@@ -23,7 +38,7 @@ namespace LABMedicine.Migrations
                     NomeCompleto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataDeNascimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -45,7 +60,7 @@ namespace LABMedicine.Migrations
                     NomeCompleto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataDeNascimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -68,39 +83,12 @@ namespace LABMedicine.Migrations
                     NomeCompleto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataDeNascimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PACIENTE", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ATENDIMENTO",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdMedico = table.Column<int>(type: "int", nullable: false),
-                    IdPaciente = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ATENDIMENTO", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ATENDIMENTO_MEDICO_IdMedico",
-                        column: x => x.IdMedico,
-                        principalTable: "MEDICO",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ATENDIMENTO_PACIENTE_IdPaciente",
-                        column: x => x.IdPaciente,
-                        principalTable: "PACIENTE",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -137,16 +125,6 @@ namespace LABMedicine.Migrations
                     { 13, "não possui alergias", "781.389.900-82", "Gertrude 84547892", "Help", "não necessita ", "04/02/1970", "Masculino", "Alexandre Mattos", 0, "96939291", 4 },
                     { 14, "não possui alergias", "677.746.870-68", "Cesar 84548915", "Unimed", "não necessita ", "01/04/1988", "Feminino", "Vitória Mengue", 2, "97989495", 0 }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ATENDIMENTO_IdMedico",
-                table: "ATENDIMENTO",
-                column: "IdMedico");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ATENDIMENTO_IdPaciente",
-                table: "ATENDIMENTO",
-                column: "IdPaciente");
         }
 
         /// <inheritdoc />

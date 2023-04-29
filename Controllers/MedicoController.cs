@@ -20,7 +20,7 @@ namespace LABMedicine.Controllers
         }
 
 
-        [HttpPost("medicos")]
+        [HttpPost]
         public ActionResult<MedicoDto> Post([FromBody] MedicoDto medicoDto)
         {
             
@@ -59,7 +59,7 @@ namespace LABMedicine.Controllers
             return StatusCode(201, medicoDto);
         }
 
-    [HttpGet("medicos/{id}")]
+    [HttpGet("{id}")]
         public ActionResult<MedicoDto> Get([FromRoute] int id)
         {
             //var medicoModel = bancoDadosContext.Medico.Find(id);
@@ -81,7 +81,7 @@ namespace LABMedicine.Controllers
             return Ok(medicoDto);
         }
 
-        [HttpGet("medicos")]
+        [HttpGet]
         public ActionResult<List<MedicoDto>> Get()
         {
             var listaMedicoModel = bancoDadosContext.Medico;
@@ -106,7 +106,7 @@ namespace LABMedicine.Controllers
 
         }
 
-        [HttpPut("medicos/{id}")]
+        [HttpPut("{id}")]
         public ActionResult<MedicoDto> Put([FromRoute] int id, [FromBody] MedicoDto medicoDto)
         {
             var medicoModel = bancoDadosContext.Medico.SingleOrDefault(e => e.Id == id);
@@ -135,7 +135,7 @@ namespace LABMedicine.Controllers
 
         }
 
-        [HttpPut("medicos/{id}/status")]
+        [HttpPut("{id}/status")]
         public ActionResult<MedicoDto> AtualizarEstadoSistema([FromRoute] int id, [FromBody] EstadoSistemaEnum estadoSistema)
         {
 

@@ -17,7 +17,7 @@ namespace LABMedicine.Controllers
             this.bancoDadosContext = bancoDadosContext;
         }
 
-        [HttpPost("enfermeiros")]
+        [HttpPost]
         public ActionResult<EnfermeiroDto> Post([FromBody] EnfermeiroDto enfermeiroDto)
         {
 
@@ -77,7 +77,7 @@ namespace LABMedicine.Controllers
 
         }
 
-        [HttpGet("enfermeiros/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<EnfermeiroDto> Get([FromRoute] int id)
         {
             //Buscar o registro no banco de dados por >>>ID<<<
@@ -102,7 +102,7 @@ namespace LABMedicine.Controllers
              return Ok(enfermeiroDto);
         }
 
-        [HttpPut("enfermeiros/{id}")]
+        [HttpPut("{id}")]
         public ActionResult<EnfermeiroDto> Put(int id, [FromBody] EnfermeiroDto enfermeiroDto)
         {
 
@@ -132,7 +132,7 @@ namespace LABMedicine.Controllers
         }
         
 
-        [HttpDelete("enfermeiros/{id}")]
+        [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
             //Verificar se existe registro no banco de dados

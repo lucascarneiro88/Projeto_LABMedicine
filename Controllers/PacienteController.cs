@@ -18,7 +18,7 @@ namespace LABMedicine.Controllers
             this.bancoDadosContext = bancoDadosContext;
         }
 
-        [HttpPost("pacientes")]
+        [HttpPost]
         public ActionResult<PacienteDto> Post([FromBody] PacienteDto pacienteDto)
         {
            
@@ -56,7 +56,7 @@ namespace LABMedicine.Controllers
           
         }
 
-        [HttpGet("pacientes/status")]
+        [HttpGet("status")]
         public ActionResult<List<PacienteDto>> Get([FromQuery] string StatusAtendimento = "Atendido")
         {
             var listaPacienteModel = bancoDadosContext.Paciente.AsQueryable();
@@ -91,7 +91,7 @@ namespace LABMedicine.Controllers
         }
 
 
-        [HttpGet("pacientes/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<PacienteDto> Get([FromRoute] int id)
         {
             var pacienteModel = bancoDadosContext.Paciente.Find(id);
@@ -119,7 +119,7 @@ namespace LABMedicine.Controllers
         }
 
 
-        [HttpPut("pacientes/{id}")]
+        [HttpPut("{id}")]
         public ActionResult<PacienteDto> Put([FromRoute] int id, [FromBody] PacienteDto pacienteDto)
         {
 
@@ -161,7 +161,7 @@ namespace LABMedicine.Controllers
 
         }
       
-        [HttpPut("pacientes/{id}/status")]
+        [HttpPut("{id}/status")]
         public ActionResult AtualizarStatusAtendimento([FromRoute] int id, [FromBody] StatusAtendimentoEnum statusAtendimento)
         {
             if (!Enum.IsDefined(typeof(StatusAtendimentoEnum), statusAtendimento))

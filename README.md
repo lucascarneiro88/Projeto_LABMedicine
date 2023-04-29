@@ -15,7 +15,7 @@ Banco de dados Microsoft SQL Server.
 Como executar a API do Projeto no ViSual Studio 2022:
 
 *Clone o repositório para o seu computador via GitHub.
-*Abra o Visual Studio 2022 e carregue a solução do projeto;
+*Abra o Visual Studio 2022 habilitar ele para linguagem c# e  .NET , carregue a solução do projeto;
 *Abra o arquivo Program.cs e configure a string de conexão com o seu banco de dados SQL Server.
 *Execute a API clicando no botão "Iniciar" ou pressionando F5.
 *Para testar a API, você pode enviar requisições HTTP utilizando ferramentas como o swagger ou Postman .
@@ -31,7 +31,7 @@ Add-Migration InitialCreate
 
 Update-Database 
 
- aplica as alterações no banco de dados e criar as tabelas e colunas necessárias para representar o seu modelo de dados.
+ aplica as alterações  e cria as tabelas necessárias para representar o seu modelo no banco de  dados.
 
  
 

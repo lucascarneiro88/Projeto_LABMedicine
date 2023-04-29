@@ -20,7 +20,6 @@ namespace LABMedicine.Controllers
         [HttpPost]
         public ActionResult<EnfermeiroDto> Post([FromBody] EnfermeiroDto enfermeiroDto)
         {
-
             
             if (!new checkCPF().IsValid(enfermeiroDto.CPF))
             {
